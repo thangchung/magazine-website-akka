@@ -49,7 +49,7 @@ namespace Cik.Magazine.Core.Storage.Projections
 
         protected override SupervisorStrategy SupervisorStrategy()
         {
-            return new OneForOneStrategy(maxNrOfRetries: 10, withinTimeRange: TimeSpan.FromSeconds(30), decider: new LocalOnlyDecider(
+            return new OneForOneStrategy(10, TimeSpan.FromSeconds(30), new LocalOnlyDecider(
                 e =>
                 {
                     _log.Info("{0}", e.GetType().Name);

@@ -19,4 +19,15 @@ namespace Cik.Magazine.Core.Messages.Category
             return Name;
         }
     }
+
+    public class CategoryCreated : Event
+    {
+        public CategoryCreated(Guid aggregateId, string name)
+            : base(aggregateId)
+        {
+            Name = name;
+        }
+
+        public string Name { get; private set; }
+    }
 }
