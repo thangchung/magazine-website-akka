@@ -1,10 +1,14 @@
 ﻿using Akka.Actor;
 using Cik.Magazine.Core.Services;
+using Cik.Magazine.Core.Storage.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Swashbuckle.Swagger.Model;
 
 namespace Cik.Magazine.Web
 {
@@ -26,10 +30,27 @@ namespace Cik.Magazine.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services
+                .AddMvc()
+                .AddJsonOptions(
+                    opts =>
+                    {
+                        opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                        opts.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                        opts.SerializerSettings.Formatting = Formatting.Indented;
+                        opts.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    });
+
+            // Add swagger
+            services.AddSwaggerGen(
+                c =>
+                {
+                    c.SingleApiVersion(new Info {Version = "v1", Title = "Magazine Website API"});
+                });
 
             services.AddScoped<IActorRefFactory>(serviceProvider => ActorSystem.Create("sys"));
-            services.AddScoped<CategoryService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryQuery, CategoryQuery>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +60,9 @@ namespace Cik.Magazine.Web
             loggerFactory.AddDebug();
 
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUi();
         }
     }
 }

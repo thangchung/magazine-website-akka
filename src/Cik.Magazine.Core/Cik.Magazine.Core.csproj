@@ -59,8 +59,8 @@
       <HintPath>..\..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -74,10 +74,12 @@
     <Compile Include="Domain\AggregateRootActor.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\CategoryState.cs" />
-    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Services\ICategoryService.cs" />
+    <Compile Include="Storage\Query\CategoryQuery.cs" />
+    <Compile Include="Storage\Query\ICategoryQuery.cs" />
+    <Compile Include="Views\CategoryView.cs" />
     <Compile Include="Messages\Category\CreateCategory.cs" />
     <Compile Include="Domain\DomainException.cs" />
-    <Compile Include="Event.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="Domain\IEventSink.cs" />

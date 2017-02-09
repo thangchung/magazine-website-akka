@@ -1,7 +1,7 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using Cik.Magazine.Core.Entities;
 using Cik.Magazine.Core.Storage.Messages;
+using Cik.Magazine.Core.Views;
 using MongoDB.Driver;
 
 namespace Cik.Magazine.Core.Storage
@@ -26,14 +26,14 @@ namespace Cik.Magazine.Core.Storage
                 db = _mongoClient.GetDatabase("magazine");
             }
             
-            var col = db.GetCollection<Category>("categories");
+            var col = db.GetCollection<CategoryView>("categories");
             if (col == null)
             {
                 db.CreateCollection("categories");
-                col = db.GetCollection<Category>("categories");
+                col = db.GetCollection<CategoryView>("categories");
             }
 
-            col.InsertOne(new Category
+            col.InsertOne(new CategoryView
             {
                 Name = message.Name
             });

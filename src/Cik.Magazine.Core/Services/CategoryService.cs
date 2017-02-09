@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Akka.Actor;
 using Cik.Magazine.Core.Domain;
-using Cik.Magazine.Core.Messages;
 using Cik.Magazine.Core.Messages.Category;
+using Cik.Magazine.Core.Views;
 
 namespace Cik.Magazine.Core.Services
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly IActorRef _actor;
 
@@ -15,10 +16,9 @@ namespace Cik.Magazine.Core.Services
             _actor = actorSystem.CategoryAggregate(Guid.NewGuid());
         }
 
-        public void DoSomething()
+        public Task<object> Create(CategoryDto cat)
         {
-            _actor.Tell(new CreateCategory(Guid.NewGuid(), "sport"));
-            _actor.Tell(SaveAggregate.Message);
+            return _actor.Ask(new CreateCategory(Guid.NewGuid(), cat.Name));
         }
     }
 }
