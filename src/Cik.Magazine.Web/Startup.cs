@@ -48,7 +48,7 @@ namespace Cik.Magazine.Web
                     c.SingleApiVersion(new Info {Version = "v1", Title = "Magazine Website API"});
                 });
 
-            services.AddScoped<IActorRefFactory>(serviceProvider => ActorSystem.Create("sys"));
+            services.AddSingleton<IActorRefFactory>(serviceProvider => ActorSystem.Create("magazine-system"));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryQuery, CategoryQuery>();
         }

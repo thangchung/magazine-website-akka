@@ -12,8 +12,8 @@ namespace Cik.Magazine.CategoryService
 
         public bool Start(HostControl hostControl)
         {
-            GlobalActorSystem = ActorSystem.Create("CategorySystem");
-            CategoryServiceActor = GlobalActorSystem.ActorOf<SampleActor>("CategoryService");
+            GlobalActorSystem = ActorSystem.Create("magazine-system");
+            CategoryServiceActor = GlobalActorSystem.ActorOf<CategoryActor>("category-service");
             return true;
         }
 
@@ -25,11 +25,18 @@ namespace Cik.Magazine.CategoryService
         }
     }
 
-    public class SampleActor : TypedActor, IHandle<CreateCategory>, ILogReceive
+    public class CategoryActor : TypedActor, IHandle<string>, IHandle<CreateCategory>, ILogReceive
     {
         public void Handle(CreateCategory message)
         {
             Console.WriteLine("Got the message: " + message.Name);
+            Sender.Tell(new CreateCategory(message.AggregateId, message.Name + "-procceed."));
+        }
+
+        public void Handle(string message)
+        {
+            Console.WriteLine("Got the string message: " + message);
+            Sender.Tell("pong.");
         }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Cik.Magazine.Core.Messages.Category;
-using Cik.Magazine.Core.Services;
-using Cik.Magazine.Core.Storage.Query;
 using Cik.Magazine.Core.Views;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +16,7 @@ namespace Cik.Magazine.Web.Controllers
         private readonly IActorRefFactory _actorSystem;
 
         public CategoryController(
-            IActorRefFactory actorSystem)
+                IActorRefFactory actorSystem)
             // ICategoryService service, 
             // ICategoryQuery categoryQuery)
         {
@@ -31,8 +28,9 @@ namespace Cik.Magazine.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<CategoryView>> GetAsync()
         {
-            var categoryServiceRef = _actorSystem.ActorOf(Props.Create<CategorySystemActor>());
-            categoryServiceRef.Tell(new CreateCategory(Guid.NewGuid(), "sample"));
+            var server = _actorSystem.ActorSelection("akka.tcp://magazine-system@localhost:8092/user/category-service");
+            var result = server.Ask("ping.").Result;
+            server.Tell(new CreateCategory(Guid.NewGuid(), "sport"));
 
             return new List<CategoryView>();
             // return await _categoryQuery.GetCategoryViews(x => true);
@@ -62,17 +60,6 @@ namespace Cik.Magazine.Web.Controllers
         public Task<bool> Delete(Guid id)
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public class CategorySystemActor : TypedActor, IHandle<CreateCategory>, ILogReceive
-    {
-        private readonly ActorSelection _server 
-            = Context.ActorSelection("akka.tcp://CategorySystem@localhost:8091/user/CategoryService");
-
-        public void Handle(CreateCategory message)
-        {
-            _server.Tell(message);
         }
     }
 }

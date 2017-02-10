@@ -6,8 +6,10 @@ namespace Cik.Magazine.CategoryService
     {
         private static int Main(string[] args)
         {
-            return (int)HostFactory.Run(x =>
+            return (int) HostFactory.Run(x =>
             {
+                x.Service<CategoryService>();
+
                 x.SetServiceName("Category");
                 x.SetDisplayName("Category Service");
                 x.SetDescription("Magazine Website - Category Service.");
@@ -15,8 +17,8 @@ namespace Cik.Magazine.CategoryService
                 x.UseAssemblyInfoForServiceInfo();
                 x.RunAsLocalSystem();
                 x.StartAutomatically();
-                //x.UseNLog();
-                x.Service<CategoryService>();
+                // x.UseNLog();
+
                 x.EnableServiceRecovery(r => r.RestartService(1));
             });
         }
