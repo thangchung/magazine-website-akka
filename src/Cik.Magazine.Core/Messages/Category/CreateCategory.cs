@@ -2,11 +2,12 @@
 
 namespace Cik.Magazine.Core.Messages.Category
 {
+    [Serializable]
     public class CreateCategory : ICommand
     {
-        public CreateCategory(Guid aggregateId, string data)
+        public CreateCategory(Guid aggregateId, string name)
         {
-            Name = data;
+            Name = name;
             AggregateId = aggregateId;
         }
 
@@ -20,6 +21,7 @@ namespace Cik.Magazine.Core.Messages.Category
         }
     }
 
+    [Serializable]
     public class CategoryCreated : Event
     {
         public CategoryCreated(Guid aggregateId, string name)

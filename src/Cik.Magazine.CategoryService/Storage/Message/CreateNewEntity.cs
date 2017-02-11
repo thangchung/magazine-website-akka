@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cik.Magazine.Core.Storage.Messages
+namespace Cik.Magazine.CategoryService.Storage.Message
 {
     public class CreateNewCategory
     {

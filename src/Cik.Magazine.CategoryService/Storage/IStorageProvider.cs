@@ -1,7 +1,7 @@
 ﻿using Akka.Actor;
-using Cik.Magazine.Core.Storage.Messages;
+using Cik.Magazine.CategoryService.Storage.Message;
 
-namespace Cik.Magazine.Core.Storage
+namespace Cik.Magazine.CategoryService.Storage
 {
     public interface IStorageProvider : IHandle<CreateNewCategory>
     {

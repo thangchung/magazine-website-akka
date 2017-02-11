@@ -1,5 +1,4 @@
 ﻿using Akka.Actor;
-using Cik.Magazine.Core.Services;
 using Cik.Magazine.Core.Storage.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +48,7 @@ namespace Cik.Magazine.Web
                 });
 
             services.AddSingleton<IActorRefFactory>(serviceProvider => ActorSystem.Create("magazine-system"));
-            services.AddScoped<ICategoryService, CategoryService>();
+            // services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryQuery, CategoryQuery>();
         }
 

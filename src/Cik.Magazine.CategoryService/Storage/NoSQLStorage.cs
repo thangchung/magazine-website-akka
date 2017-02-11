@@ -1,10 +1,10 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using Cik.Magazine.Core.Storage.Messages;
+using Cik.Magazine.CategoryService.Storage.Message;
 using Cik.Magazine.Core.Views;
 using MongoDB.Driver;
 
-namespace Cik.Magazine.Core.Storage
+namespace Cik.Magazine.CategoryService.Storage
 {
     public class NoSqlStorage : TypedActor, IStorageProvider
     {

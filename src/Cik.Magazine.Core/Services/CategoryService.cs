@@ -1,8 +1,6 @@
-﻿using System;
+﻿/* using System;
 using System.Threading.Tasks;
 using Akka.Actor;
-using Cik.Magazine.Core.Domain;
-using Cik.Magazine.Core.Messages.Category;
 using Cik.Magazine.Core.Views;
 
 namespace Cik.Magazine.Core.Services
@@ -21,4 +19,4 @@ namespace Cik.Magazine.Core.Services
             return _actor.Ask(new CreateCategory(Guid.NewGuid(), cat.Name));
         }
     }
-}
+} */

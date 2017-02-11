@@ -1,6 +1,8 @@
 ﻿using Akka;
+using Cik.Magazine.Core;
+using Cik.Magazine.Core.Domain;
 
-namespace Cik.Magazine.Core.Domain
+namespace Cik.Magazine.CategoryService.Domain
 {
     public class Category : AggregateRootActor
     {

@@ -29,7 +29,7 @@ namespace Cik.Magazine.Web.Controllers
         public async Task<IEnumerable<CategoryView>> GetAsync()
         {
             var server = _actorSystem.ActorSelection("akka.tcp://magazine-system@localhost:8092/user/category-service");
-            var result = server.Ask("ping.").Result;
+            // var result = server.Ask("ping.").Result;
             server.Tell(new CreateCategory(Guid.NewGuid(), "sport"));
 
             return new List<CategoryView>();

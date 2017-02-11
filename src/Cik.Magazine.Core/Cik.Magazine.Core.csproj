@@ -70,15 +70,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\AggregateFactory.cs" />
     <Compile Include="Domain\AggregateRootActor.cs" />
-    <Compile Include="Domain\Category.cs" />
-    <Compile Include="Domain\CategoryState.cs" />
+    <Compile Include="Messages\Category\CreateCategory.cs" />
     <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Storage\Query\CategoryQuery.cs" />
     <Compile Include="Storage\Query\ICategoryQuery.cs" />
     <Compile Include="Views\CategoryView.cs" />
-    <Compile Include="Messages\Category\CreateCategory.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IEvent.cs" />
@@ -87,10 +84,6 @@
     <Compile Include="Messages\SaveAggregate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryService.cs" />
-    <Compile Include="Storage\IStorageProvider.cs" />
-    <Compile Include="Storage\Messages\CreateNewEntity.cs" />
-    <Compile Include="Storage\NoSqlStorage.cs" />
-    <Compile Include="Storage\Projections\Category\CategoryCreated.cs" />
     <Compile Include="Storage\Projections\ReadModelProjections.cs" />
     <Compile Include="SystemClock.cs" />
     <Compile Include="SystemData.cs" />

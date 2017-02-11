@@ -1,8 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using Cik.Magazine.Core.Storage.Messages;
+using Cik.Magazine.CategoryService.Storage.Message;
+using Cik.Magazine.Core;
 
-namespace Cik.Magazine.Core.Storage.Projections.Category
+namespace Cik.Magazine.CategoryService.Storage.Projection
 {
     public class CategoryCreated : TypedActor, IHandle<Core.Messages.Category.CategoryCreated>
     {

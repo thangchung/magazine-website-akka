@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿/*using System.Threading.Tasks;
 using Cik.Magazine.Core.Views;
 
 namespace Cik.Magazine.Core.Services
@@ -7,4 +7,4 @@ namespace Cik.Magazine.Core.Services
     {
         Task<object> Create(CategoryDto cat);
     }
-}
+} */

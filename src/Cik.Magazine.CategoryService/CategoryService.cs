@@ -1,6 +1,6 @@
 ﻿using System;
 using Akka.Actor;
-using Cik.Magazine.Core.Messages.Category;
+using Cik.Magazine.CategoryService.Domain;
 using Topshelf;
 
 namespace Cik.Magazine.CategoryService
@@ -13,7 +13,8 @@ namespace Cik.Magazine.CategoryService
         public bool Start(HostControl hostControl)
         {
             GlobalActorSystem = ActorSystem.Create("magazine-system");
-            CategoryServiceActor = GlobalActorSystem.ActorOf<CategoryActor>("category-service");
+           // CategoryServiceActor = GlobalActorSystem.ActorOf(() => new CategoryActor(GlobalActorSystem));
+            CategoryServiceActor = GlobalActorSystem.CategoryAggregate(Guid.NewGuid());
             return true;
         }
 
@@ -25,12 +26,12 @@ namespace Cik.Magazine.CategoryService
         }
     }
 
-    public class CategoryActor : TypedActor, IHandle<string>, IHandle<CreateCategory>, ILogReceive
+    /* public class CategoryActor : TypedActor, IHandle<string>, IHandle<CreateCategory>, ILogReceive
     {
         public void Handle(CreateCategory message)
         {
             Console.WriteLine("Got the message: " + message.Name);
-            Sender.Tell(new CreateCategory(message.AggregateId, message.Name + "-procceed."));
+
         }
 
         public void Handle(string message)
@@ -38,5 +39,5 @@ namespace Cik.Magazine.CategoryService
             Console.WriteLine("Got the string message: " + message);
             Sender.Tell("pong.");
         }
-    }
+    } */
 }
