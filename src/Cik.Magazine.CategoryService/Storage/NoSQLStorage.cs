@@ -26,14 +26,14 @@ namespace Cik.Magazine.CategoryService.Storage
                 db = _mongoClient.GetDatabase("magazine");
             }
             
-            var col = db.GetCollection<CategoryView>("categories");
+            var col = db.GetCollection<CategoryViewResponse>("categories");
             if (col == null)
             {
                 db.CreateCollection("categories");
-                col = db.GetCollection<CategoryView>("categories");
+                col = db.GetCollection<CategoryViewResponse>("categories");
             }
 
-            col.InsertOne(new CategoryView
+            col.InsertOne(new CategoryViewResponse
             {
                 Name = message.Name
             });

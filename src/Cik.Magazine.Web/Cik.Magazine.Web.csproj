@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -20,6 +21,7 @@
     <PackageReference Include="Akka.Cluster" Version="1.1.3" />
     <PackageReference Include="Akka.Persistence" Version="1.1.3.32-beta" />
     <PackageReference Include="Akka.Remote" Version="1.1.3" />
+    <PackageReference Include="Akka.Serialization.Hyperion" Version="1.1.3.32-beta" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.0" />
@@ -35,6 +37,7 @@
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cik.Magazine.CategoryService\Cik.Magazine.CategoryService.csproj" />
     <ProjectReference Include="..\Cik.Magazine.Core\Cik.Magazine.Core.csproj" />
   </ItemGroup>
 </Project>

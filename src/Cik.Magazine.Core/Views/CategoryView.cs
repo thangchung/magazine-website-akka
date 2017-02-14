@@ -4,7 +4,23 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Cik.Magazine.Core.Views
 {
-    public class CategoryView
+    [Serializable]
+    public class ListCategoryViewRequest
+    {
+    }
+
+    [Serializable]
+    public class CategoryViewRequest
+    {
+        public CategoryViewRequest(Guid id)
+        {
+            Id = id;
+        }   
+        
+        public Guid Id { get; }   
+    }
+
+    public class CategoryViewResponse
     {
         [BsonId]
         public Guid Id { get; set; }
@@ -13,6 +29,7 @@ namespace Cik.Magazine.Core.Views
         public string Name { get; set; }
     }
 
+    [Serializable]
     public class CategoryDto
     {
         public string Name { get; set; }

@@ -4,17 +4,18 @@ using System.IO;
 using System.Linq;
 using Akka.Actor;
 using Akka.Event;
+using Cik.Magazine.Core;
 
-namespace Cik.Magazine.Core.Storage.Projections
+namespace Cik.Magazine.CategoryService.Storage.Projection
 {
     public class ReadModelProjections : ReceiveActor
     {
-        public static readonly Type[] ProjectionActors;
+        public static Type[] ProjectionActors;
         private readonly ILoggingAdapter _log;
         private readonly HashSet<ActorPath> _paths = new HashSet<ActorPath>();
 
         static ReadModelProjections()
-        {
+        { 
             var root = typeof(ReadModelProjections);
             ProjectionActors = root.Assembly.GetTypes()
                 // ReSharper disable once PossibleNullReferenceException

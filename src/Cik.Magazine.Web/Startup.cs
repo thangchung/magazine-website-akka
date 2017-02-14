@@ -1,5 +1,4 @@
 ﻿using Akka.Actor;
-using Cik.Magazine.Core.Storage.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -48,8 +47,6 @@ namespace Cik.Magazine.Web
                 });
 
             services.AddSingleton<IActorRefFactory>(serviceProvider => ActorSystem.Create("magazine-system"));
-            // services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICategoryQuery, CategoryQuery>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

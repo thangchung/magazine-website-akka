@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Cik.Magazine.Core.Messages.Category;
@@ -11,43 +12,36 @@ namespace Cik.Magazine.Web.Controllers
     [Route("api/categories")]
     public class CategoryController : Controller
     {
-        // private readonly ICategoryQuery _categoryQuery;
-        // private readonly ICategoryService _service;
-        private readonly IActorRefFactory _actorSystem;
+        private readonly ActorSelection _categoryCommander;
+        private readonly ActorSelection _categoryQuery;
 
-        public CategoryController(
-                IActorRefFactory actorSystem)
-            // ICategoryService service, 
-            // ICategoryQuery categoryQuery)
+        public CategoryController(IActorRefFactory actorSystem)
         {
-            _actorSystem = actorSystem;
-            // _service = service;
-            // _categoryQuery = categoryQuery;
+            _categoryCommander = actorSystem.ActorSelection(ConfigurationManager.AppSettings["CategoryCommander"]);
+            _categoryQuery = actorSystem.ActorSelection(ConfigurationManager.AppSettings["CategoryQuery"]);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CategoryView>> GetAsync()
+        public async Task<IEnumerable<CategoryViewResponse>> GetAsync()
         {
-            var server = _actorSystem.ActorSelection("akka.tcp://magazine-system@localhost:8092/user/category-service");
-            // var result = server.Ask("ping.").Result;
-            server.Tell(new CreateCategory(Guid.NewGuid(), "sport"));
-
-            return new List<CategoryView>();
-            // return await _categoryQuery.GetCategoryViews(x => true);
+            var result = await _categoryQuery.Ask<List<CategoryViewResponse>>(
+                new ListCategoryViewRequest());
+            return result;
         }
 
         [HttpGet("{id}")]
-        public async Task<CategoryView> GetAsync(Guid id)
+        public async Task<CategoryViewResponse> GetAsync(Guid id)
         {
-            // return await _categoryQuery.GetCategoryView(id);
-            throw new NotImplementedException();
+            var result = await _categoryQuery.Ask<CategoryViewResponse>(
+                new CategoryViewRequest(id));
+            return result;
         }
 
         [HttpPost]
-        public async Task<object> PostAsync([FromBody] CategoryDto cat)
+        public bool PostAsync([FromBody] CategoryDto cat)
         {
-            // return await _service.Create(cat);
-            throw new NotImplementedException();
+            _categoryCommander.Tell(new CreateCategory(Guid.NewGuid(), cat.Name));
+            return true;
         }
 
         [HttpPut("{id}")]
