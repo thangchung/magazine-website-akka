@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
@@ -28,7 +27,7 @@ namespace Cik.Magazine.AuthHost
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes={ "api1"}
+                    AllowedScopes = {"api1"}
                 },
                 new Client
                 {
@@ -38,20 +37,16 @@ namespace Cik.Magazine.AuthHost
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = {"api1"}
                 },
                 new Client
                 {
                     ClientId = "mvc",
                     ClientName = "MVC Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
-
-                    RedirectUris ={ @"http://localhost:62953/signin-oidc" },
-
-                    PostLogoutRedirectUris = { "http://localhost:62953" },
-
-
-                    AllowedScopes = new List<String>
+                    RedirectUris = {@"http://localhost:62953/signin-oidc"},
+                    PostLogoutRedirectUris = {"http://localhost:62953"},
+                    AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
@@ -63,20 +58,42 @@ namespace Cik.Magazine.AuthHost
                     ClientName = "JavaScript Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-
-                    RedirectUris = {
+                    RedirectUris =
+                    {
                         "http://localhost:64102/callback.html",
-                        "http://localhost:64102/user-manager-sample-silent.html",
+                        "http://localhost:64102/user-manager-sample-silent.html"
                     },
-                    PostLogoutRedirectUris = { "http://localhost:64102/index.html" },
-                    AllowedCorsOrigins = { "http://localhost:64102" },
-                    AccessTokenLifetime = 70,                                        
+                    PostLogoutRedirectUris = {"http://localhost:64102/index.html"},
+                    AllowedCorsOrigins = {"http://localhost:64102"},
+                    AccessTokenLifetime = 70,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "api1"
+                    }
+                },
+                new Client
+                {
+                    ClientId = "swagger",
+                    ClientName = "swagger",
+                    ClientSecrets = new List<Secret> {new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris =
+                    {
+                        "http://localhost:64102/callback.html",
+                        "http://localhost:8091/swagger/o2c.html"
                     },
+                    PostLogoutRedirectUris = {"http://localhost:64102/index.html"},
+                    AllowedCorsOrigins = {"http://localhost:64102"},
+                    AccessTokenLifetime = 70,
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
+                    }
                 }
             };
         }
@@ -105,7 +122,7 @@ namespace Cik.Magazine.AuthHost
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                new IdentityResources.Profile()
             };
         }
     }

@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lighthouse", "src\Lighthous
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B705FA55-841C-4792-B357-0E0F7E7BBD2D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cik.Magazine.AuthHost", "src\Cik.Magazine.Security\Cik.Magazine.AuthHost.csproj", "{E2E232F9-5FBC-42A4-BA8E-B0AD87988F3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cik.Magazine.AuthHost", "src\Cik.Magazine.AuthHost\Cik.Magazine.AuthHost.csproj", "{E2E232F9-5FBC-42A4-BA8E-B0AD87988F3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

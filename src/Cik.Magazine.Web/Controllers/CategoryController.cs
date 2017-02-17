@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Akka.Actor;
 using Cik.Magazine.Core.Messages.Category;
 using Cik.Magazine.Core.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cik.Magazine.Web.Controllers
 {
+    [Authorize]
     [Route("api/categories")]
     public class CategoryController : Controller
     {

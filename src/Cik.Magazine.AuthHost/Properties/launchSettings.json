@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "WebApplication3": {
+    "Cik.Magazine.AuthHost": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
