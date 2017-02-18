@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cik.Magazine.Web.Controllers
 {
+    /// <summary>
+    /// Category API
+    /// </summary>
     [Authorize]
     [Route("api/categories")]
     public class CategoryController : Controller
@@ -23,6 +26,10 @@ namespace Cik.Magazine.Web.Controllers
             _categoryQuery = actorSystem.ActorSelection(ConfigurationManager.AppSettings["CategoryQuery"]);
         }
 
+        /// <summary>
+        /// Get all categories.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<CategoryViewResponse>> GetAsync()
         {

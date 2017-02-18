@@ -11,7 +11,7 @@ namespace Cik.Magazine.AuthHost
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("magazine-api", "Magazine API")
             };
         }
 
@@ -21,60 +21,6 @@ namespace Cik.Magazine.AuthHost
             {
                 new Client
                 {
-                    ClientId = "client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = {"api1"}
-                },
-                new Client
-                {
-                    ClientId = "ro.client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = {"api1"}
-                },
-                new Client
-                {
-                    ClientId = "mvc",
-                    ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    RedirectUris = {@"http://localhost:62953/signin-oidc"},
-                    PostLogoutRedirectUris = {"http://localhost:62953"},
-                    AllowedScopes = new List<string>
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    }
-                },
-                new Client
-                {
-                    ClientId = "js",
-                    ClientName = "JavaScript Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowAccessTokensViaBrowser = true,
-                    RedirectUris =
-                    {
-                        "http://localhost:64102/callback.html",
-                        "http://localhost:64102/user-manager-sample-silent.html"
-                    },
-                    PostLogoutRedirectUris = {"http://localhost:64102/index.html"},
-                    AllowedCorsOrigins = {"http://localhost:64102"},
-                    AccessTokenLifetime = 70,
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
-                    }
-                },
-                new Client
-                {
                     ClientId = "swagger",
                     ClientName = "swagger",
                     ClientSecrets = new List<Secret> {new Secret("secret".Sha256())},
@@ -82,17 +28,16 @@ namespace Cik.Magazine.AuthHost
                     AllowAccessTokensViaBrowser = true,
                     RedirectUris =
                     {
-                        "http://localhost:64102/callback.html",
                         "http://localhost:8091/swagger/o2c.html"
                     },
-                    PostLogoutRedirectUris = {"http://localhost:64102/index.html"},
-                    AllowedCorsOrigins = {"http://localhost:64102"},
-                    AccessTokenLifetime = 70,
+                    PostLogoutRedirectUris = {"http://localhost:8091/swagger"},
+                    AllowedCorsOrigins = {"http://localhost:8091"},
+                    AccessTokenLifetime = 2000,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        "magazine-api"
                     }
                 }
             };
@@ -105,13 +50,7 @@ namespace Cik.Magazine.AuthHost
                 new TestUser
                 {
                     SubjectId = "1",
-                    Username = "alice",
-                    Password = "password"
-                },
-                new TestUser
-                {
-                    SubjectId = "2",
-                    Username = "bob",
+                    Username = "admin",
                     Password = "password"
                 }
             };

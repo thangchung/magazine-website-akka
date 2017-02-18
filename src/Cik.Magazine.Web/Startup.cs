@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using Akka.Actor;
 using IdentityServer4.Models;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
@@ -62,10 +64,15 @@ namespace Cik.Magazine.Web
                         Flow = "implicit",
                         TokenUrl = "http://localhost:9999/connect/token",
                         AuthorizationUrl = "http://localhost:9999/connect/authorize",
-                        Scopes = new Dictionary<string, string>{ { "api1", "api1" } }
+                        Scopes = new Dictionary<string, string>{ { "magazine-api", "Magazine API Resource" } }
                     });
                     c.OperationFilter<SecurityRequirementsOperationFilter>();
                     c.DescribeAllEnumsAsStrings();
+
+                    // Set the comments path for the swagger json and ui.
+                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    var xmlPath = Path.Combine(basePath, "MagazineApi.xml");
+                    c.IncludeXmlComments(xmlPath);
                 });
 
             services.AddSingleton<IActorRefFactory>(serviceProvider => ActorSystem.Create("magazine-system"));
@@ -81,11 +88,6 @@ namespace Cik.Magazine.Web
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions 
             {
                 Authority = "http://localhost:9999/",
-                // AllowedScopes = new[] { "api1" },
-                /*ApiName = "swagger",
-                ApiSecret = "secret",
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,*/
                 RequireHttpsMetadata = false // don't use this for production env
             });  
 
