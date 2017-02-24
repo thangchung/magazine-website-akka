@@ -9,8 +9,6 @@
     <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="snapshots\" />
-    <Folder Include="snapshots\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>

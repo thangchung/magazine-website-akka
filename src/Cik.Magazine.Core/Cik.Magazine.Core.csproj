@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="Domain\AggregateRootActor.cs" />
     <Compile Include="Messages\Category\CreateCategory.cs" />
+    <Compile Include="Messages\Category\DeleteCategory.cs" />
+    <Compile Include="Messages\Category\UpdateCategory.cs" />
     <Compile Include="Views\CategoryView.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="ICommand.cs" />

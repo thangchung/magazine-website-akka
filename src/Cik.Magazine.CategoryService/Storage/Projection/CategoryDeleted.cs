@@ -5,21 +5,21 @@ using Cik.Magazine.Core;
 
 namespace Cik.Magazine.CategoryService.Storage.Projection
 {
-    public class CategoryCreated : TypedActor, IHandle<Core.Messages.Category.CategoryCreated>
+    public class CategoryDeleted : TypedActor, IHandle<Core.Messages.Category.CategoryDeleted>
     {
-        private readonly IActorRef _storage;
         private readonly ILoggingAdapter _log;
+        private readonly IActorRef _storage;
 
-        public CategoryCreated()
+        public CategoryDeleted()
         {
             _storage = Context.ActorOf(Props.Create<NoSqlStorage>(), SystemData.CategoryStorageActor.Name);
             _log = Context.GetLogger();
         }
 
-        public void Handle(Core.Messages.Category.CategoryCreated message)
+        public void Handle(Core.Messages.Category.CategoryDeleted message)
         {
-            _log.Info("CategoryCreated is handled.");
-            _storage.Tell(new CreateNewCategory(message.AggregateId, message.Name));
+            _log.Info("CategoryDeleted is handled.");
+            _storage.Tell(new DeleteCategory(message.AggregateId));
         }
     }
 }

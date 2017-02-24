@@ -5,9 +5,11 @@ namespace Cik.Magazine.Core
 {
     public class SystemData
     {
-        public const string SystemName = "sys";
-        public static ActorMetaData StorageActor = new ActorMetaData("storage", $"akka://{SystemName}/user/storage");
-        public static ActorMetaData ProjectionsActor = new ActorMetaData("projections", $"akka://{SystemName}/user/projections");
+        public const string SystemName = "magazine-system";
+        public static ActorMetaData CategoryStorageActor = new ActorMetaData("storage", $"akka://{SystemName}/user/category-storage");
+        public static ActorMetaData CategoryProjectionsActor = new ActorMetaData("projections", $"akka://{SystemName}/user/category-projections");
+        public static ActorMetaData CategoryQueryActor = new ActorMetaData("category-query", $"akka://{SystemName}/user/category-query");
+        public static ActorMetaData CategoryCommanderActor = new ActorMetaData("category-commander", $"akka://{SystemName}/user/category-commander");
 
         public class ActorMetaData
         {

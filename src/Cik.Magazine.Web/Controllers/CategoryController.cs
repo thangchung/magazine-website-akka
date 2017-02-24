@@ -1,29 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Threading.Tasks;
 using Akka.Actor;
+using Cik.Magazine.Core;
 using Cik.Magazine.Core.Messages.Category;
 using Cik.Magazine.Core.Views;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cik.Magazine.Web.Controllers
 {
     /// <summary>
-    /// Category API
+    /// Category API Controller
     /// </summary>
-    [Authorize]
+    // [Authorize]
     [Route("api/categories")]
     public class CategoryController : Controller
     {
         private readonly ActorSelection _categoryCommander;
         private readonly ActorSelection _categoryQuery;
 
+        /// <summary>
+        /// Constructor for CategoryController
+        /// </summary>
+        /// <param name="actorSystem"></param>
         public CategoryController(IActorRefFactory actorSystem)
         {
-            _categoryCommander = actorSystem.ActorSelection(ConfigurationManager.AppSettings["CategoryCommander"]);
-            _categoryQuery = actorSystem.ActorSelection(ConfigurationManager.AppSettings["CategoryQuery"]);
+            _categoryCommander = actorSystem.ActorSelection($"/user/{SystemData.CategoryCommanderActor.Name}-group");
+            _categoryQuery = actorSystem.ActorSelection($"/user/{SystemData.CategoryQueryActor.Name}-group");
         }
 
         /// <summary>
@@ -38,6 +41,11 @@ namespace Cik.Magazine.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Get category by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<CategoryViewResponse> GetAsync(Guid id)
         {
@@ -46,6 +54,11 @@ namespace Cik.Magazine.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Create a new category
+        /// </summary>
+        /// <param name="cat"></param>
+        /// <returns></returns>
         [HttpPost]
         public bool PostAsync([FromBody] CategoryDto cat)
         {
@@ -53,16 +66,29 @@ namespace Cik.Magazine.Web.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Edit the category
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cat"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
-        public Task<bool> Put(int id, [FromBody] CategoryDto cat)
+        public bool Put(Guid id, [FromBody] CategoryDto cat)
         {
-            throw new NotImplementedException();
+            _categoryCommander.Tell(new UpdateCategory(id, cat.Name));
+            return true;
         }
 
+        /// <summary>
+        ///  Delete the category
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
-        public Task<bool> Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _categoryCommander.Tell(new DeleteCategory(id));
+            return true;
         }
     }
 }

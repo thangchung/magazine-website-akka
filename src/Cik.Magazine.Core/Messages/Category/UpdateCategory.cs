@@ -3,9 +3,9 @@
 namespace Cik.Magazine.Core.Messages.Category
 {
     [Serializable]
-    public class CreateCategory : ICommand
+    public class UpdateCategory : ICommand
     {
-        public CreateCategory(Guid aggregateId, string name)
+        public UpdateCategory(Guid aggregateId, string name)
         {
             Name = name;
             AggregateId = aggregateId;
@@ -22,9 +22,9 @@ namespace Cik.Magazine.Core.Messages.Category
     }
 
     [Serializable]
-    public class CategoryCreated : Event
+    public class CategoryUpdated : Event
     {
-        public CategoryCreated(Guid aggregateId, string name)
+        public CategoryUpdated(Guid aggregateId, string name)
             : base(aggregateId)
         {
             Name = name;

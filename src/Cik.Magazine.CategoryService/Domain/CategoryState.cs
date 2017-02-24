@@ -29,9 +29,29 @@ namespace Cik.Magazine.CategoryService.Domain
             Name = message.Name;
         }
 
+        public void Apply(CategoryUpdated message)
+        {
+            Name = message.Name;
+        }
+
+        public void Apply(CategoryDeleted message)
+        {                                
+            
+        }
+
         public void Handle(CreateCategory message)
         {
             Events.Publish(new CategoryCreated(message.AggregateId, message.Name));
+        }
+
+        public void Handle(UpdateCategory message)
+        {
+            Events.Publish(new CategoryUpdated(message.AggregateId, message.Name));
+        }
+
+        public void Handle(DeleteCategory message)
+        {
+            Events.Publish(new CategoryDeleted(message.AggregateId));
         }
 
         public override string ToString()

@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
-using System.Linq;
 using Akka.Actor;
+using Akka.Routing;
 using IdentityServer4.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +13,6 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Cik.Magazine.Web
 {
@@ -47,7 +45,7 @@ namespace Cik.Magazine.Web
                         opts.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     });
 
-            services.AddAuthorization();
+            // services.AddAuthorization();
 
             // Add swagger
             services.AddSwaggerGen(
@@ -58,7 +56,7 @@ namespace Cik.Magazine.Web
                         Version = "v1",
                         Title = "Magazine Website API"
                     });
-                    c.AddSecurityDefinition("oauth2", new OAuth2Scheme
+                    /* c.AddSecurityDefinition("oauth2", new OAuth2Scheme
                     {
                         Type = "oauth2",
                         Flow = "implicit",
@@ -66,7 +64,7 @@ namespace Cik.Magazine.Web
                         AuthorizationUrl = "http://localhost:9999/connect/authorize",
                         Scopes = new Dictionary<string, string>{ { "magazine-api", "Magazine API Resource" } }
                     });
-                    c.OperationFilter<SecurityRequirementsOperationFilter>();
+                    c.OperationFilter<SecurityRequirementsOperationFilter>(); */
                     c.DescribeAllEnumsAsStrings();
 
                     // Set the comments path for the swagger json and ui.
@@ -75,7 +73,12 @@ namespace Cik.Magazine.Web
                     c.IncludeXmlComments(xmlPath);
                 });
 
-            services.AddSingleton<IActorRefFactory>(serviceProvider => ActorSystem.Create("magazine-system"));
+            // build up the actors
+            var systemActor = ActorSystem.Create("magazine-system");
+            systemActor.ActorOf(Props.Empty.WithRouter(FromConfig.Instance), "category-query-group");
+            systemActor.ActorOf(Props.Empty.WithRouter(FromConfig.Instance), "category-commander-group");
+
+            services.AddSingleton<IActorRefFactory>(serviceProvider => systemActor);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,12 +87,12 @@ namespace Cik.Magazine.Web
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimFilter.Clear();
+            /* JwtSecurityTokenHandler.DefaultInboundClaimFilter.Clear();
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions 
             {
                 Authority = "http://localhost:9999/",
                 RequireHttpsMetadata = false // don't use this for production env
-            });  
+            }); */  
 
             app.UseMvc();
 
@@ -97,37 +100,8 @@ namespace Cik.Magazine.Web
             app.UseSwaggerUi(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Magazine Website API V1");
-                c.ConfigureOAuth2("swagger", "secret".Sha256(), "swagger", "swagger");
+                // c.ConfigureOAuth2("swagger", "secret".Sha256(), "swagger", "swagger");
             });
-        }
-    }
-
-    public class SecurityRequirementsOperationFilter : IOperationFilter
-    {
-        public void Apply(Operation operation, OperationFilterContext context)
-        {
-            // Policy names map to scopes
-            var controllerScopes = context.ApiDescription.ControllerAttributes()
-                .OfType<AuthorizeAttribute>()
-                .Select(attr => attr.Policy);
-
-            var actionScopes = context.ApiDescription.ActionAttributes()
-                .OfType<AuthorizeAttribute>()
-                .Select(attr => attr.Policy);
-
-            var requiredScopes = controllerScopes.Union(actionScopes).Distinct();
-
-            if (requiredScopes.Any())
-            {
-                operation.Responses.Add("401", new Response { Description = "Unauthorized" });
-                operation.Responses.Add("403", new Response { Description = "Forbidden" });
-
-                operation.Security = new List<IDictionary<string, IEnumerable<string>>>();
-                operation.Security.Add(new Dictionary<string, IEnumerable<string>>
-                {
-                    { "oauth2", requiredScopes }
-                });
-            }
         }
     }
 }

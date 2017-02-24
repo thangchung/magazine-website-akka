@@ -23,7 +23,7 @@ namespace Cik.Magazine.CategoryService
         {
             CategoryCommanderActor.Tell(PoisonPill.Instance);
             CategoryQueryActor.Tell(PoisonPill.Instance);
-            GlobalActorSystem.Terminate();
+            GlobalActorSystem.Terminate().Wait(5000);
             return true;
         }
     }
