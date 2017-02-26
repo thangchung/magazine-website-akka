@@ -5,3 +5,5 @@ The Microservices + CQRS architecture are implemented by using Akkadotnet
 - Service Discovery using Lighthouse at akka.tcp://magazine-system@localhost:8090
 - Category Service at akka.tcp://magazine-system@localhost:8092
 - Web API at http://localhost:8091/swagger
+
+[![](https://codescene.io/projects/786/status.svg) Get more details at **codescene.io**.](https://codescene.io/projects/786/jobs/latest-successful/results)
