@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -15,9 +16,9 @@ namespace Cik.Magazine.Core.Views
         public CategoryViewRequest(Guid id)
         {
             Id = id;
-        }   
-        
-        public Guid Id { get; }   
+        }
+
+        public Guid Id { get; }
     }
 
     public class CategoryViewResponse
@@ -30,8 +31,11 @@ namespace Cik.Magazine.Core.Views
     }
 
     [Serializable]
-    public class CategoryDto
+    public class CategoryModel
     {
+        [Required]
         public string Name { get; set; }
+
+        public Guid ParentId { get; set; }
     }
 }

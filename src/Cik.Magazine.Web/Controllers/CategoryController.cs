@@ -60,9 +60,9 @@ namespace Cik.Magazine.Web.Controllers
         /// <param name="cat"></param>
         /// <returns></returns>
         [HttpPost]
-        public bool PostAsync([FromBody] CategoryDto cat)
+        public bool PostAsync([FromBody] CategoryModel cat)
         {
-            _categoryCommander.Tell(new CreateCategory(Guid.NewGuid(), cat.Name));
+            _categoryCommander.Tell(new CreateCategory(Guid.NewGuid(), cat.Name, cat.ParentId));
             return true;
         }
 
@@ -73,7 +73,7 @@ namespace Cik.Magazine.Web.Controllers
         /// <param name="cat"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(Guid id, [FromBody] CategoryDto cat)
+        public bool Put(Guid id, [FromBody] CategoryModel cat)
         {
             _categoryCommander.Tell(new UpdateCategory(id, cat.Name));
             return true;

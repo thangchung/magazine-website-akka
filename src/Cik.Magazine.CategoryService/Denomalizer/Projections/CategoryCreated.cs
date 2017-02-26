@@ -19,7 +19,7 @@ namespace Cik.Magazine.CategoryService.Denomalizer.Projections
         public void Handle(Core.Messages.Category.CategoryCreated message)
         {
             _log.Info("CategoryCreated is handled.");
-            _storage.Tell(new CreateNewCategory(message.AggregateId, message.Name));
+            _storage.Tell(new CreateNewCategory(message.AggregateId, message.Name, message.ParentId));
         }
     }
 }

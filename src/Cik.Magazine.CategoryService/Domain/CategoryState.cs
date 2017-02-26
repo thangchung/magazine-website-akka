@@ -26,7 +26,7 @@ namespace Cik.Magazine.CategoryService.Domain
 
         public void Handle(CreateCategory message)
         {
-            Events.Publish(new CategoryCreated(message.AggregateId, message.Name));
+            Events.Publish(new CategoryCreated(message.AggregateId, message.Name, message.ParentId));
         }
 
         public void Handle(UpdateCategory message)

@@ -1,16 +1,21 @@
 using System;
+using Cik.Magazine.Core;
 
 namespace Cik.Magazine.CategoryService.Denomalizer.Messages
 {
     public class CreateNewCategory
     {
-        public CreateNewCategory(Guid key, string name)
+        public CreateNewCategory(Guid id, string name, Guid parentId)
         {
-            Key = key;
+            Id = id;
             Name = name;
+            ParentId = parentId;
+            Created = SystemClock.UtcNow;
         }
 
-        public Guid Key { get; private set; }
+        public Guid Id { get; private set; }
         public string Name { get; private set; }
+        public Guid ParentId { get; private set; }
+        public DateTime Created { get; private set; }
     }
 }
