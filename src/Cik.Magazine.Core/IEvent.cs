@@ -17,9 +17,9 @@ namespace Cik.Magazine.Core
             UtcDate = SystemClock.UtcNow;
         }
 
-        public Guid AggregateId { get; private set; }
+        public Guid AggregateId { get; }
 
-        public DateTime UtcDate { get; private set; }
+        public DateTime UtcDate { get; }
 
         object IConsistentHashable.ConsistentHashKey => AggregateId;
     }

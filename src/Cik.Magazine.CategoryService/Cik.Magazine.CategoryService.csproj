@@ -96,15 +96,14 @@
     <Compile Include="Domain\CategoryState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Storage\IStorageProvider.cs" />
-    <Compile Include="Storage\Message\CreateNewCategory.cs" />
-    <Compile Include="Storage\Message\DeleteCategory.cs" />
-    <Compile Include="Storage\Message\UpdateCategory.cs" />
-    <Compile Include="Storage\NoSQLStorage.cs" />
-    <Compile Include="Storage\Projection\CategoryCreated.cs" />
-    <Compile Include="Storage\Projection\CategoryDeleted.cs" />
-    <Compile Include="Storage\Projection\CategoryUpdated.cs" />
-    <Compile Include="Storage\Projection\ReadModelProjections.cs" />
+    <Compile Include="Denomalizer\Messages\CreateNewCategory.cs" />
+    <Compile Include="Denomalizer\Messages\DeleteCategory.cs" />
+    <Compile Include="Denomalizer\Messages\UpdateCategory.cs" />
+    <Compile Include="Denomalizer\NoSQLStorage.cs" />
+    <Compile Include="Denomalizer\Projections\CategoryCreated.cs" />
+    <Compile Include="Denomalizer\Projections\CategoryDeleted.cs" />
+    <Compile Include="Denomalizer\Projections\CategoryUpdated.cs" />
+    <Compile Include="Denomalizer\Projections\ReadModelProjections.cs" />
     <Compile Include="Query\CategoryQueryActor.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -47,21 +47,21 @@ namespace Cik.Magazine.CategoryService.Query
 
         private List<CategoryViewResponse> GetCategoryViews()
         {
-            _log.Info("Come to NoSQL data source for querying data");
+            _log.Info("Start to query data in NoSQL data source.");
             var db = _mongoClient.GetDatabase("magazine");
             var col = db.GetCollection<CategoryViewResponse>("categories");
             var result = col.Find(x => true).ToList();
-            _log.Info("Finished querying data");
+            _log.Info("Finished querying data.");
             return result;
         }
 
         private CategoryViewResponse GetCategoryView(Guid id)
         {
-            _log.Info("Come to NoSQL data source for querying data");
+            _log.Info("Start to query data in NoSQL data source.");
             var db = _mongoClient.GetDatabase("magazine");
             var col = db.GetCollection<CategoryViewResponse>("categories");
             var result = col.Find(x => x.Id == id).FirstOrDefault();
-            _log.Info("Finished querying data");
+            _log.Info("Finished querying data.");
             return result;
         }
     }

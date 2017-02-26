@@ -1,9 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using Cik.Magazine.CategoryService.Storage.Message;
+using Cik.Magazine.CategoryService.Denomalizer.Messages;
 using Cik.Magazine.Core;
 
-namespace Cik.Magazine.CategoryService.Storage.Projection
+namespace Cik.Magazine.CategoryService.Denomalizer.Projections
 {
     public class CategoryUpdated : TypedActor, IHandle<Core.Messages.Category.CategoryUpdated>
     {

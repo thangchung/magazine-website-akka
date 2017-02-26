@@ -6,8 +6,10 @@ using Akka.Actor;
 using Akka.Event;
 using Cik.Magazine.Core;
 
-namespace Cik.Magazine.CategoryService.Storage.Projection
+namespace Cik.Magazine.CategoryService.Denomalizer.Projections
 {
+    // TODO: We need to keep this class in the specific assembly to scan all the handlers 
+    // TODO: need to find out the way to move it down to Core project.
     public class ReadModelProjections : ReceiveActor
     {
         public static Type[] ProjectionActors;

@@ -1,9 +1,9 @@
 ﻿using System;
 using Akka.Actor;
 using Akka.Routing;
+using Cik.Magazine.CategoryService.Denomalizer.Projections;
 using Cik.Magazine.CategoryService.Domain;
 using Cik.Magazine.CategoryService.Query;
-using Cik.Magazine.CategoryService.Storage.Projection;
 using Cik.Magazine.Core;
 using Cik.Magazine.Core.Domain;
 

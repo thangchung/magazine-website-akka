@@ -24,21 +24,6 @@ namespace Cik.Magazine.CategoryService.Domain
             ((dynamic) this).Apply((dynamic) @event);
         }
 
-        public void Apply(CategoryCreated message)
-        {
-            Name = message.Name;
-        }
-
-        public void Apply(CategoryUpdated message)
-        {
-            Name = message.Name;
-        }
-
-        public void Apply(CategoryDeleted message)
-        {                                
-            
-        }
-
         public void Handle(CreateCategory message)
         {
             Events.Publish(new CategoryCreated(message.AggregateId, message.Name));
@@ -52,6 +37,20 @@ namespace Cik.Magazine.CategoryService.Domain
         public void Handle(DeleteCategory message)
         {
             Events.Publish(new CategoryDeleted(message.AggregateId));
+        }
+
+        public void Apply(CategoryCreated message)
+        {
+            Name = message.Name;
+        }
+
+        public void Apply(CategoryUpdated message)
+        {
+            Name = message.Name;
+        }
+
+        public void Apply(CategoryDeleted message)
+        {
         }
 
         public override string ToString()
