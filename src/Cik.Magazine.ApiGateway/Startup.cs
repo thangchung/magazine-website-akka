@@ -1,6 +1,8 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Routing;
+using Cik.Magazine.ApiGateway.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -96,6 +98,9 @@ namespace Cik.Magazine.ApiGateway
                 Authority = "http://localhost:9999/",
                 RequireHttpsMetadata = false // don't use this for production env
             }); */
+
+            // TODO: need to check some of URI alive, for example check AuthHost, CategoryService...
+            app.UseServiceStatus(() => Task.FromResult(true));
 
             app.UseMvc();
 
