@@ -1,6 +1,6 @@
-﻿using Cik.Magazine.Core;
-using Cik.Magazine.Core.Domain;
-using Cik.Magazine.Core.Messages.Category;
+﻿using Cik.Magazine.Shared;
+using Cik.Magazine.Shared.Domain;
+using Cik.Magazine.Shared.Messages.Category;
 
 namespace Cik.Magazine.CategoryService.Domain
 {

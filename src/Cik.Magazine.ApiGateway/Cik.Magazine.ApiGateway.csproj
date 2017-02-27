@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
+<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup Label="Configuration">
     <DocumentationFile>bin\Debug\net452\MagazineApi.xml</DocumentationFile>
   </PropertyGroup>
@@ -46,6 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cik.Magazine.CategoryService\Cik.Magazine.CategoryService.csproj" />
-    <ProjectReference Include="..\Cik.Magazine.Core\Cik.Magazine.Core.csproj" />
+    <ProjectReference Include="..\Cik.Magazine.Shared\Cik.Magazine.Shared.csproj" />
   </ItemGroup>
 </Project>

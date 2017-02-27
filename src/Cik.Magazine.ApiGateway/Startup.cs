@@ -1,9 +1,6 @@
-﻿using System.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
+﻿using System.IO;
 using Akka.Actor;
 using Akka.Routing;
-using IdentityServer4.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace Cik.Magazine.Web
+namespace Cik.Magazine.ApiGateway
 {
     public class Startup
     {

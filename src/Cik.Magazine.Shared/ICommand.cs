@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cik.Magazine.Core
+namespace Cik.Magazine.Shared
 {
     public interface ICommand
     {

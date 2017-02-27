@@ -1,4 +1,4 @@
-﻿namespace Cik.Magazine.Core.Messages
+﻿namespace Cik.Magazine.Shared.Messages
 {
     public class SaveAggregate
     {

@@ -4,8 +4,8 @@ using Akka.Routing;
 using Cik.Magazine.CategoryService.Denomalizer.Projections;
 using Cik.Magazine.CategoryService.Domain;
 using Cik.Magazine.CategoryService.Query;
-using Cik.Magazine.Core;
-using Cik.Magazine.Core.Domain;
+using Cik.Magazine.Shared;
+using Cik.Magazine.Shared.Domain;
 
 namespace Cik.Magazine.CategoryService
 {

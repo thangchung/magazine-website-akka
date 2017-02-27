@@ -1,19 +1,18 @@
 ﻿using System;
 
-namespace Cik.Magazine.Core.Messages.Category
+namespace Cik.Magazine.Shared.Messages.Category
 {
     [Serializable]
-    public class CreateCategory : ICommand
+    public class UpdateCategory : ICommand
     {
-        public CreateCategory(Guid aggregateId, string name, Guid parentId)
+        public UpdateCategory(Guid aggregateId, string name)
         {
             Name = name;
-            ParentId = parentId;
             AggregateId = aggregateId;
         }
 
         public string Name { get; }
-        public Guid ParentId { get; }
+
         public Guid AggregateId { get; }
 
         public override string ToString()
@@ -23,16 +22,14 @@ namespace Cik.Magazine.Core.Messages.Category
     }
 
     [Serializable]
-    public class CategoryCreated : Event
+    public class CategoryUpdated : Event
     {
-        public CategoryCreated(Guid aggregateId, string name, Guid parentId)
+        public CategoryUpdated(Guid aggregateId, string name)
             : base(aggregateId)
         {
             Name = name;
-            ParentId = parentId;
         }
 
         public string Name { get; }
-        public Guid ParentId { get; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Akka.Routing;
 
-namespace Cik.Magazine.Core
+namespace Cik.Magazine.Shared
 {
     public interface IEvent
     {

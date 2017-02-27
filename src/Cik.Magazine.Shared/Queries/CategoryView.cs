@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Cik.Magazine.Core.Views
+namespace Cik.Magazine.Shared.Queries
 {
     [Serializable]
     public class ListCategoryViewRequest
@@ -28,14 +27,8 @@ namespace Cik.Magazine.Core.Views
 
         [BsonRepresentation(BsonType.String)]
         public string Name { get; set; }
-    }
 
-    [Serializable]
-    public class CategoryModel
-    {
-        [Required]
-        public string Name { get; set; }
-
+        [BsonRepresentation(BsonType.String)]
         public Guid ParentId { get; set; }
     }
 }

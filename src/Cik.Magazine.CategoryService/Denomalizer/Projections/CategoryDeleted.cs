@@ -1,11 +1,11 @@
 ﻿using Akka.Actor;
 using Akka.Event;
 using Cik.Magazine.CategoryService.Denomalizer.Messages;
-using Cik.Magazine.Core;
+using Cik.Magazine.Shared;
 
 namespace Cik.Magazine.CategoryService.Denomalizer.Projections
 {
-    public class CategoryDeleted : TypedActor, IHandle<Core.Messages.Category.CategoryDeleted>
+    public class CategoryDeleted : TypedActor, IHandle<Shared.Messages.Category.CategoryDeleted>
     {
         private readonly ILoggingAdapter _log;
         private readonly IActorRef _storage;
@@ -16,7 +16,7 @@ namespace Cik.Magazine.CategoryService.Denomalizer.Projections
             _log = Context.GetLogger();
         }
 
-        public void Handle(Core.Messages.Category.CategoryDeleted message)
+        public void Handle(Shared.Messages.Category.CategoryDeleted message)
         {
             _log.Info("CategoryDeleted is handled.");
             _storage.Tell(new DeleteCategory(message.AggregateId));

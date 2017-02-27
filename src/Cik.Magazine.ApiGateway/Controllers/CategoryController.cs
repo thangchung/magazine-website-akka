@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Akka.Actor;
-using Cik.Magazine.Core;
-using Cik.Magazine.Core.Messages.Category;
-using Cik.Magazine.Core.Views;
+using Cik.Magazine.Shared;
+using Cik.Magazine.Shared.Messages.Category;
+using Cik.Magazine.Shared.Models.Category;
+using Cik.Magazine.Shared.Queries;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Cik.Magazine.Web.Controllers
+namespace Cik.Magazine.ApiGateway.Controllers
 {
     /// <summary>
     /// Category API Controller

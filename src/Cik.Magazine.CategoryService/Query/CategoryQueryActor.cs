@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Akka.Actor;
 using Akka.Event;
-using Cik.Magazine.Core.Views;
+using Cik.Magazine.Shared.Queries;
 using MongoDB.Driver;
 
 namespace Cik.Magazine.CategoryService.Query

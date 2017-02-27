@@ -1,7 +1,7 @@
 ﻿using System;
 using Akka.Actor;
 
-namespace Cik.Magazine.Core
+namespace Cik.Magazine.Shared
 {
     public class SystemData
     {

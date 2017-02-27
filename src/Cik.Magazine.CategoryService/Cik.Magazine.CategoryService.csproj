@@ -111,11 +111,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cik.Magazine.Core\Cik.Magazine.Core.csproj">
+    <ProjectReference Include="..\Cik.Magazine.Shared\Cik.Magazine.Shared.csproj">
       <Project>{851a58ed-dfbd-430c-99cf-993859997ab2}</Project>
-      <Name>Cik.Magazine.Core</Name>
+      <Name>Cik.Magazine.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

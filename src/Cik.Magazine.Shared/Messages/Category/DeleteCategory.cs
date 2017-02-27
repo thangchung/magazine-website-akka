@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cik.Magazine.Core.Messages.Category
+namespace Cik.Magazine.Shared.Messages.Category
 {
     [Serializable]
     public class DeleteCategory : ICommand

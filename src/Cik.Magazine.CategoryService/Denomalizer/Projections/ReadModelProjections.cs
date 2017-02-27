@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Akka.Actor;
 using Akka.Event;
-using Cik.Magazine.Core;
+using Cik.Magazine.Shared;
 
 namespace Cik.Magazine.CategoryService.Denomalizer.Projections
 {

@@ -3,9 +3,9 @@ using Akka;
 using Akka.Actor;
 using Akka.Event;
 using Akka.Persistence;
-using Cik.Magazine.Core.Messages;
+using Cik.Magazine.Shared.Messages;
 
-namespace Cik.Magazine.Core.Domain
+namespace Cik.Magazine.Shared.Domain
 {
     public class AggregateRootCreationParameters
     {

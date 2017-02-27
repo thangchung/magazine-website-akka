@@ -7,8 +7,8 @@
     <ProjectGuid>{851A58ED-DFBD-430C-99CF-993859997AB2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cik.Magazine.Core</RootNamespace>
-    <AssemblyName>Cik.Magazine.Core</AssemblyName>
+    <RootNamespace>Cik.Magazine.Shared</RootNamespace>
+    <AssemblyName>Cik.Magazine.Shared</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -83,7 +83,8 @@
     <Compile Include="Messages\Category\UpdateCategory.cs" />
     <Compile Include="Messages\CommandResponse.cs" />
     <Compile Include="Messages\SaveAggregate.cs" />
-    <Compile Include="Views\CategoryView.cs" />
+    <Compile Include="Models\Category\CategoryModel.cs" />
+    <Compile Include="Queries\CategoryView.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IEvent.cs" />

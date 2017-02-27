@@ -1,6 +1,6 @@
 ﻿using Akka;
-using Cik.Magazine.Core;
-using Cik.Magazine.Core.Domain;
+using Cik.Magazine.Shared;
+using Cik.Magazine.Shared.Domain;
 
 namespace Cik.Magazine.CategoryService.Domain
 {

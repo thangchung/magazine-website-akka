@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Cik.Magazine.Web.OAuth
+namespace Cik.Magazine.ApiGateway.OAuth
 {
     public class SecurityRequirementsOperationFilter : IOperationFilter
     {

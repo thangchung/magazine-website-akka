@@ -1,4 +1,4 @@
-﻿namespace Cik.Magazine.Core.Domain
+﻿namespace Cik.Magazine.Shared.Domain
 {
     public interface IEventSink
     {

@@ -1,7 +1,7 @@
 ﻿using Akka.Actor;
 using Akka.Event;
 using Cik.Magazine.CategoryService.Denomalizer.Messages;
-using Cik.Magazine.Core.Views;
+using Cik.Magazine.Shared.Queries;
 using MongoDB.Driver;
 
 namespace Cik.Magazine.CategoryService.Denomalizer
@@ -37,7 +37,8 @@ namespace Cik.Magazine.CategoryService.Denomalizer
 
             col.InsertOne(new CategoryViewResponse
             {
-                Name = message.Name
+                Name = message.Name, 
+                ParentId = message.ParentId
             });
         }
 

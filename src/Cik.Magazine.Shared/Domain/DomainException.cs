@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cik.Magazine.Core.Domain
+namespace Cik.Magazine.Shared.Domain
 {
     public class DomainException : Exception
     {

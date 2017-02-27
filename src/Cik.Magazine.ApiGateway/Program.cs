@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Cik.Magazine.Web
+namespace Cik.Magazine.ApiGateway
 {
     public class Program
     {

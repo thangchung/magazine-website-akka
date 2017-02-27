@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cik.Magazine.Core.Messages
+namespace Cik.Magazine.Shared.Messages
 {
     public class CommandResponse
     {

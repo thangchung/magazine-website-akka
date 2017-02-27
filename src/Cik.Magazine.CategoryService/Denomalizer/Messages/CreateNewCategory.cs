@@ -1,5 +1,5 @@
 using System;
-using Cik.Magazine.Core;
+using Cik.Magazine.Shared;
 
 namespace Cik.Magazine.CategoryService.Denomalizer.Messages
 {
