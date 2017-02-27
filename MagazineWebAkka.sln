@@ -26,6 +26,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cik.Magazine.Shared", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4CB0BA1C-963F-4041-A620-4573A23FCF00}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{3E26C4A3-8368-4844-AF53-B778E52DF47E}"
+	ProjectSection(SolutionItems) = preProject
+		src\UI\index.html = src\UI\index.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{70BCECA3-DF52-4329-8C5C-255DA0F7FC59}"
+	ProjectSection(SolutionItems) = preProject
+		src\UI\js\scripts.js = src\UI\js\scripts.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{5D0590EC-3A54-4291-B42B-EC89CC641FBB}"
+	ProjectSection(SolutionItems) = preProject
+		src\UI\css\styles.css = src\UI\css\styles.css
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,5 +123,8 @@ Global
 		{E2E232F9-5FBC-42A4-BA8E-B0AD87988F3B} = {B705FA55-841C-4792-B357-0E0F7E7BBD2D}
 		{851A58ED-DFBD-430C-99CF-993859997AB2} = {4CB0BA1C-963F-4041-A620-4573A23FCF00}
 		{4CB0BA1C-963F-4041-A620-4573A23FCF00} = {B10EC218-4988-49EE-982C-8FE265BD1B12}
+		{3E26C4A3-8368-4844-AF53-B778E52DF47E} = {B10EC218-4988-49EE-982C-8FE265BD1B12}
+		{70BCECA3-DF52-4329-8C5C-255DA0F7FC59} = {3E26C4A3-8368-4844-AF53-B778E52DF47E}
+		{5D0590EC-3A54-4291-B42B-EC89CC641FBB} = {3E26C4A3-8368-4844-AF53-B778E52DF47E}
 	EndGlobalSection
 EndGlobal
