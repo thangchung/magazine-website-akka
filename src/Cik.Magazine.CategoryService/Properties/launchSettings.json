@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Cik.Magazine.CategoryService": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\projects\\github\\akka\\magazine-website-akka\\src\\Cik.Magazine.CategoryService\\bin\\Debug\\Cik.Magazine.CategoryService.exe"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Lighthouse": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\projects\\github\\akka\\magazine-website-akka\\src\\Lighthouse\\bin\\Debug\\Lighthouse.exe"
+    }
+  }
+}

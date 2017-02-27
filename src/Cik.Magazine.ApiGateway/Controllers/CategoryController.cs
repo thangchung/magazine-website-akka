@@ -88,7 +88,7 @@ namespace Cik.Magazine.ApiGateway.Controllers
         [HttpDelete("{id}")]
         public bool Delete(Guid id)
         {
-            _categoryCommander.Tell(new DeleteCategory(id));
+            _categoryCommander.Tell(new DeleteCategory(id)); 
             return true;
         }
     }
