@@ -1,6 +1,5 @@
 ﻿using System;
 using Akka.Actor;
-using Cik.Magazine.CategoryService.Domain;
 using Topshelf;
 
 namespace Cik.Magazine.CategoryService

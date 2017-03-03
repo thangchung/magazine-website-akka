@@ -9,6 +9,6 @@ namespace Cik.Magazine.CategoryService.Denomalizer.Messages
             Key = key;
         }
 
-        public Guid Key { get; private set; }
+        public Guid Key { get; }
     }
 }

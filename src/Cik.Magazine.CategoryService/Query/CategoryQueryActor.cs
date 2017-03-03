@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Akka.Actor;
 using Akka.Event;
@@ -8,7 +7,9 @@ using MongoDB.Driver;
 
 namespace Cik.Magazine.CategoryService.Query
 {
-    public class CategoryQueryActor : ReceiveActor
+    public class CategoryQueryActor : TypedActor,
+        IHandle<ListCategoryViewRequest>,
+        IHandle<CategoryViewRequest>
     {
         private readonly ILoggingAdapter _log;
         // TODO: will refactor later
@@ -17,18 +18,26 @@ namespace Cik.Magazine.CategoryService.Query
         public CategoryQueryActor()
         {
             _log = Context.GetLogger();
+        }
 
-            Receive<ListCategoryViewRequest>(x =>
-            {
-                _log.Info("Received message[{0}]", x.GetType().Name);
-                Sender.Tell(GetCategoryViews(), Self);
-            });
+        public void Handle(CategoryViewRequest message)
+        {
+            _log.Info("Received message[{0}] and query data in NoSQL data source.", message.GetType().Name);
+            var db = _mongoClient.GetDatabase("magazine");
+            var col = db.GetCollection<CategoryViewResponse>("categories");
+            var result = col.Find(x => x.Id == message.Id).FirstOrDefault();
+            _log.Info("Finished querying data.");
+            Sender.Tell(result, Self);
+        }
 
-            Receive<CategoryViewRequest>(x =>
-            {
-                _log.Info("Received message[{0}]", x.GetType().Name);
-                Sender.Tell(GetCategoryView(x.Id), Self);
-            });
+        public void Handle(ListCategoryViewRequest message)
+        {
+            _log.Info("Received message[{0}] and query data in NoSQL data source.", message.GetType().Name);
+            var db = _mongoClient.GetDatabase("magazine");
+            var col = db.GetCollection<CategoryViewResponse>("categories");
+            var result = col.Find(x => true).ToList();
+            _log.Info("Finished querying data.");
+            Sender.Tell(result, Self);
         }
 
         protected override SupervisorStrategy SupervisorStrategy()
@@ -43,26 +52,6 @@ namespace Cik.Magazine.CategoryService.Query
 
                     return Directive.Stop;
                 }));
-        }
-
-        private List<CategoryViewResponse> GetCategoryViews()
-        {
-            _log.Info("Start to query data in NoSQL data source.");
-            var db = _mongoClient.GetDatabase("magazine");
-            var col = db.GetCollection<CategoryViewResponse>("categories");
-            var result = col.Find(x => true).ToList();
-            _log.Info("Finished querying data.");
-            return result;
-        }
-
-        private CategoryViewResponse GetCategoryView(Guid id)
-        {
-            _log.Info("Start to query data in NoSQL data source.");
-            var db = _mongoClient.GetDatabase("magazine");
-            var col = db.GetCollection<CategoryViewResponse>("categories");
-            var result = col.Find(x => x.Id == id).FirstOrDefault();
-            _log.Info("Finished querying data.");
-            return result;
         }
     }
 }

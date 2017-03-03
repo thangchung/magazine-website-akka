@@ -10,7 +10,7 @@ namespace Cik.Magazine.CategoryService.Denomalizer.Messages
             Name = name;
         }
 
-        public Guid Key { get; private set; }
-        public string Name { get; private set; }
+        public Guid Key { get; }
+        public string Name { get; }
     }
 }

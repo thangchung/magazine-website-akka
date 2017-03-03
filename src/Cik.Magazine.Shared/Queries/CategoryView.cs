@@ -5,11 +5,6 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Cik.Magazine.Shared.Queries
 {
     [Serializable]
-    public class ListCategoryViewRequest
-    {
-    }
-
-    [Serializable]
     public class CategoryViewRequest
     {
         public CategoryViewRequest(Guid id)

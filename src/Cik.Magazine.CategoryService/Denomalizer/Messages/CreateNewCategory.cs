@@ -13,9 +13,9 @@ namespace Cik.Magazine.CategoryService.Denomalizer.Messages
             Created = SystemClock.UtcNow;
         }
 
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public Guid ParentId { get; private set; }
-        public DateTime Created { get; private set; }
+        public Guid Id { get; }
+        public string Name { get; }
+        public Guid ParentId { get; }
+        public DateTime Created { get; }
     }
 }
