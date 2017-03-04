@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace Cik.Magazine.CategoryService.Query
 {
-    public class CategoryQueryActor : TypedActor,
+    public class CategoryQuery : TypedActor,
         IHandle<ListCategoryViewRequest>,
         IHandle<CategoryViewRequest>
     {
@@ -15,7 +15,7 @@ namespace Cik.Magazine.CategoryService.Query
         // TODO: will refactor later
         private readonly MongoClient _mongoClient = new MongoClient(new MongoUrl("mongodb://127.0.0.1:27017"));
 
-        public CategoryQueryActor()
+        public CategoryQuery()
         {
             _log = Context.GetLogger();
         }

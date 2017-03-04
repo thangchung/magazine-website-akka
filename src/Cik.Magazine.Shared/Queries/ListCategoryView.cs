@@ -3,7 +3,7 @@
 namespace Cik.Magazine.Shared.Queries
 {
     [Serializable]
-    public class ListCategoryViewRequest
+    public class ListCategoryViewRequest : Request
     {
     }
 }
