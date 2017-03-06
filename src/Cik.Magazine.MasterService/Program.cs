@@ -8,7 +8,7 @@ namespace Cik.Magazine.MasterService
         {
             return (int)HostFactory.Run(x =>
             {
-                // x.Service<MasterService>();
+                x.Service<MasterService>();
 
                 x.SetServiceName("Master");
                 x.SetDisplayName("Master Service");

@@ -1,4 +1,8 @@
-﻿using Topshelf;
+﻿using Akka.Actor;
+using Autofac;
+using Cik.Magazine.Shared.Extensions;
+using Topshelf;
+using Topshelf.Autofac;
 
 namespace Cik.Magazine.CategoryService
 {
@@ -8,18 +12,21 @@ namespace Cik.Magazine.CategoryService
         {
             return (int) HostFactory.Run(x =>
             {
-                x.Service<CategoryService>();
+                var container = new ContainerBuilder().GetContainer(new[] {typeof(CategoryService)});
 
-                x.SetServiceName("Category");
-                x.SetDisplayName("Category Service");
-                x.SetDescription("Magazine Website - Category Service.");
+                x.UseSerilog();
+                x.UseAutofacContainer(container);
+                x.Service(() => container.Resolve<CategoryService>());
 
                 x.UseAssemblyInfoForServiceInfo();
                 x.RunAsLocalSystem();
                 x.StartAutomatically();
-                // x.UseNLog();
 
                 x.EnableServiceRecovery(r => r.RestartService(1));
+
+                x.SetServiceName("Category");
+                x.SetDisplayName("Category Service");
+                x.SetDescription("Magazine Website - Category Service.");
             });
         }
     }
