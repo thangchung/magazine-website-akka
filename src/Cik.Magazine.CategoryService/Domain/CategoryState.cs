@@ -6,13 +6,8 @@ namespace Cik.Magazine.CategoryService.Domain
 {
     internal class CategoryState
     {
-        public CategoryState(IEventSink events)
-        {
-            Events = events;
-        }
-
-        public string Name { get; set; }
-        internal IEventSink Events { get; set; }
+        public string Name { get; private set; }
+        internal IEventSink EventSink { get; set; }
 
         public void Handle(ICommand command)
         {
@@ -26,17 +21,17 @@ namespace Cik.Magazine.CategoryService.Domain
 
         public void Handle(CreateCategory message)
         {
-            Events.Publish(new CategoryCreated(message.AggregateId, message.Name, message.ParentId));
+            EventSink.Publish(new CategoryCreated(message.AggregateId, message.Name, message.ParentId));
         }
 
         public void Handle(UpdateCategory message)
         {
-            Events.Publish(new CategoryUpdated(message.AggregateId, message.Name));
+            EventSink.Publish(new CategoryUpdated(message.AggregateId, message.Name));
         }
 
         public void Handle(DeleteCategory message)
         {
-            Events.Publish(new CategoryDeleted(message.AggregateId));
+            EventSink.Publish(new CategoryDeleted(message.AggregateId));
         }
 
         public void Apply(CategoryCreated message)
@@ -55,7 +50,7 @@ namespace Cik.Magazine.CategoryService.Domain
 
         public override string ToString()
         {
-            return string.Join(", ", Events);
+            return string.Join(", ", Name);
         }
     }
 }

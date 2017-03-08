@@ -1,5 +1,7 @@
 ﻿using System;
 using Akka.Actor;
+using Cik.Magazine.Shared.Messages.Category;
+using MongoDB.Bson.Serialization;
 using Serilog;
 using Topshelf;
 
@@ -22,8 +24,13 @@ namespace Cik.Magazine.CategoryService
         {
             _logger.Information("Create an actor system, query and commander.");
             GlobalActorSystem = ActorSystem.Create("magazine-system");
-            CategoryCommanderActor = GlobalActorSystem.CategoryCommanderAggregate(Guid.NewGuid());
+            CategoryCommanderActor = GlobalActorSystem.CategoryCommanderAggregate(new Guid("8f88d4f42e3c4a868b4667dfe5f97bea"));
             CategoryQueryActor = GlobalActorSystem.CategoryQueryAggregate();
+
+            // config for mongo
+            // TODO: need to scan all the events and map it to BsonClassMap
+            BsonClassMap.RegisterClassMap<CategoryCreated>();
+
             return true;
         }
 
@@ -32,7 +39,7 @@ namespace Cik.Magazine.CategoryService
             _logger.Information("Release the actor system, query and commander resources.");
             CategoryCommanderActor.Tell(PoisonPill.Instance);
             CategoryQueryActor.Tell(PoisonPill.Instance);
-            GlobalActorSystem.Terminate().Wait(5000);
+            GlobalActorSystem.Terminate();
             return true;
         }
     }

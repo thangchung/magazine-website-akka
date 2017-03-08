@@ -1,5 +1,6 @@
 ﻿using System;
 using Akka.Routing;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Cik.Magazine.Shared
 {
@@ -17,9 +18,10 @@ namespace Cik.Magazine.Shared
             UtcDate = SystemClock.UtcNow;
         }
 
-        public Guid AggregateId { get; }
+        [BsonId]
+        public Guid AggregateId { get; private set; }
 
-        public DateTime UtcDate { get; }
+        public DateTime UtcDate { get; private set; }
 
         object IConsistentHashable.ConsistentHashKey => AggregateId;
     }

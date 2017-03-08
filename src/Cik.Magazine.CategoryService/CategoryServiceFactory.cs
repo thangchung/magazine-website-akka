@@ -12,7 +12,7 @@ namespace Cik.Magazine.CategoryService
     public static class CategoryServiceFactory
     {
         public static IActorRef CategoryCommanderAggregate(this IActorRefFactory system, Guid id,
-            int snapshotThreshold = 10)
+            int snapshotThreshold = 2)
         {
             var nameOfCommanderActor = SystemData.CategoryCommanderActor.Name;
             var nameofProjectionActor = SystemData.CategoryProjectionsActor.Name;

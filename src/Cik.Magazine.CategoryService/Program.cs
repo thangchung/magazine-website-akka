@@ -1,5 +1,4 @@
-﻿using Akka.Actor;
-using Autofac;
+﻿using Autofac;
 using Cik.Magazine.Shared.Extensions;
 using Topshelf;
 using Topshelf.Autofac;

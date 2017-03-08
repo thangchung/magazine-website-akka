@@ -11,7 +11,7 @@ namespace Cik.Magazine.CategoryService.Domain
         public Category(AggregateRootCreationParameters parameters) 
             : base(parameters)
         {
-            _state = new CategoryState(this);
+            _state = new CategoryState {EventSink = this};
         }
 
         protected override bool Handle(ICommand command)
@@ -31,7 +31,7 @@ namespace Cik.Magazine.CategoryService.Domain
             state.Match()
                 .With<CategoryState>(x =>
                 {
-                    x.Events = this;
+                    x.EventSink = this;
                     _state = x;
                 });
         }

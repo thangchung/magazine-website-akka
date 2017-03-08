@@ -47,6 +47,7 @@ namespace Cik.Magazine.Shared.Domain
             {
                 Apply(e);
                 _projections.Tell(@event);
+                Self.Tell(SaveAggregate.Message); // save the snapshot if it is possible
             });
         }
 
@@ -68,6 +69,14 @@ namespace Cik.Magazine.Shared.Domain
         {
             return message.Match()
                 .With<SaveAggregate>(x => Save())
+                .With<SaveSnapshotSuccess>(success =>
+                {
+                    _log.Debug("Saved snapshot");
+                    DeleteMessages(success.Metadata.SequenceNr);
+                })
+                .With<SaveSnapshotFailure>(failure => {
+                    // handle snapshot save failure...
+                })
                 .With<ICommand>(command =>
                 {
                     try
@@ -85,7 +94,9 @@ namespace Cik.Magazine.Shared.Domain
         private bool Save()
         {
             if (LastSequenceNr - LastSnapshottedVersion >= _snapshotThreshold)
+            {
                 SaveSnapshot(GetState());
+            }
 
             return true;
         }

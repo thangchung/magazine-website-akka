@@ -22,7 +22,6 @@ namespace Cik.Magazine.Shared.Messages.Category
         }
     }
 
-    [Serializable]
     public class CategoryCreated : Event
     {
         public CategoryCreated(Guid aggregateId, string name, Guid parentId)
@@ -32,7 +31,8 @@ namespace Cik.Magazine.Shared.Messages.Category
             ParentId = parentId;
         }
 
-        public string Name { get; }
-        public Guid ParentId { get; }
+        public string Name { get; private set; }
+
+        public Guid ParentId { get; private set; }
     }
 }
