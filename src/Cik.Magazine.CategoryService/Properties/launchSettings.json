@@ -2,7 +2,7 @@
   "profiles": {
     "Cik.Magazine.CategoryService": {
       "commandName": "Executable",
-      "executablePath": "C:\\Users\\projects\\github\\akka\\magazine-website-akka\\src\\Cik.Magazine.CategoryService\\bin\\Debug\\net461\\Cik.Magazine.CategoryService.exe"
+      "executablePath": "C:\\Users\\projects\\github\\akka\\magazine-website-akka\\src\\Cik.Magazine.CategoryService\\bin\\Debug\\net461\\win7-x86\\Cik.Magazine.CategoryService.exe"
     }
   }
 }

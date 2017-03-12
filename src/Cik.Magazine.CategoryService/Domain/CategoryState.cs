@@ -4,7 +4,7 @@ using Cik.Magazine.Shared.Messages.Category;
 
 namespace Cik.Magazine.CategoryService.Domain
 {
-    internal class CategoryState
+    public class CategoryState
     {
         public string Name { get; private set; }
         public Status Status { get; private set; }
@@ -47,6 +47,11 @@ namespace Cik.Magazine.CategoryService.Domain
 
         public void Apply(CategoryDeleted message)
         {
+        }
+
+        public void Apply(CategoryStatusUpdated message)
+        {
+            Status = message.Status;
         }
 
         public override string ToString()

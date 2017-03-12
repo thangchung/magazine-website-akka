@@ -12,7 +12,6 @@ namespace Cik.Magazine.Shared.Messages.Category
         }
 
         public string Name { get; }
-
         public Guid AggregateId { get; }
 
         public override string ToString()
@@ -21,7 +20,6 @@ namespace Cik.Magazine.Shared.Messages.Category
         }
     }
 
-    [Serializable]
     public class CategoryUpdated : Event
     {
         public CategoryUpdated(Guid aggregateId, string name)
@@ -31,5 +29,16 @@ namespace Cik.Magazine.Shared.Messages.Category
         }
 
         public string Name { get; }
+    }
+
+    public class CategoryStatusUpdated : Event
+    {
+        public CategoryStatusUpdated(Guid aggregateId, Status status)
+            : base(aggregateId)
+        {
+            Status = status;
+        }
+
+        public Status Status { get; }
     }
 }

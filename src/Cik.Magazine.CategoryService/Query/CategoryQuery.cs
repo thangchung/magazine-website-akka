@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Remoting.Contexts;
 using Akka.Actor;
 using Akka.Event;
+using Cik.Magazine.CategoryService.Sagas;
 using Cik.Magazine.Shared.Queries;
 using MongoDB.Driver;
 
@@ -32,6 +34,8 @@ namespace Cik.Magazine.CategoryService.Query
 
         public void Handle(ListCategoryViewRequest message)
         {
+            var saga = Context.ActorOf(Props.Create(() => new ReviewCategorySaga(new Guid("8f88d4f42e3c4a868b4667dfe5f97bea"))));
+
             _log.Info("Received message[{0}] and query data in NoSQL data source.", message.GetType().Name);
             var db = _mongoClient.GetDatabase("magazine");
             var col = db.GetCollection<CategoryViewResponse>("categories");

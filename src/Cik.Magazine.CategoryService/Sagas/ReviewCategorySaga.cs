@@ -1,19 +1,12 @@
 ﻿using System;
 using Akka.Persistence.Fsm;
+using Cik.Magazine.CategoryService.Domain;
 using Cik.Magazine.Shared;
 using Cik.Magazine.Shared.Messages.Category;
 
 namespace Cik.Magazine.CategoryService.Sagas
 {
-    public interface IReviewEvent
-    {
-    }
-
-    public class RemindAdminReview : IReviewEvent
-    {
-    }
-
-    public class ReviewCategorySaga : PersistentFSM<Status, Event, IReviewEvent>
+    public class ReviewCategorySaga : PersistentFSM<Status, CategoryState, Event>
     {
         private readonly Guid _id;
 
@@ -24,14 +17,35 @@ namespace Cik.Magazine.CategoryService.Sagas
 
         public override string PersistenceId => $"{GetType().Name}-agg-{_id:n}".ToLowerInvariant();
 
-        protected override void OnRecoveryCompleted()
+        protected override bool ReceiveRecover(object message)
         {
-            throw new NotImplementedException();
+            return base.ReceiveRecover(message);
         }
 
-        protected override Event ApplyEvent(IReviewEvent e, Event data)
+        protected override void OnRecoveryCompleted()
         {
-            throw new NotImplementedException();
+            When(Status.Reviewing, (e, state) =>
+            {
+                if (e.FsmEvent is CategoryCreated)
+                {
+                    // TODO: do the actions like send email to notify or something else
+                    var oldEvent = (CategoryCreated) e.FsmEvent;
+                    return
+                        state.Applying(new CategoryStatusUpdated(oldEvent.AggregateId, Status.Published));
+                }
+
+                return state;
+            });
+        }
+
+        protected override CategoryState ApplyEvent(Event e, CategoryState data)
+        {
+            if (e is CategoryStatusUpdated)
+            {
+                data.Apply((CategoryStatusUpdated) e);
+                return data;
+            }
+            return data;
         }
     }
 }
