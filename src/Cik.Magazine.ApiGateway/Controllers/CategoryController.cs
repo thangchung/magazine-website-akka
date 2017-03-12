@@ -63,7 +63,7 @@ namespace Cik.Magazine.ApiGateway.Controllers
         [HttpPost]
         public bool PostAsync([FromBody] CategoryModel cat)
         {
-            _categoryCommander.Tell(new CreateCategory(Guid.NewGuid(), cat.Name, cat.ParentId));
+            _categoryCommander.Tell(new CreateCategory(Guid.NewGuid(), cat.Name, cat.Status));
             return true;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Cik.Magazine.Shared.Messages.Category;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -24,6 +25,6 @@ namespace Cik.Magazine.Shared.Queries
         public string Name { get; set; }
 
         [BsonRepresentation(BsonType.String)]
-        public Guid ParentId { get; set; }
+        public Status Status { get; set; }
     }
 }

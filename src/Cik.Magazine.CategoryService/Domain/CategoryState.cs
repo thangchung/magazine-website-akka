@@ -7,6 +7,7 @@ namespace Cik.Magazine.CategoryService.Domain
     internal class CategoryState
     {
         public string Name { get; private set; }
+        public Status Status { get; private set; }
         internal IEventSink EventSink { get; set; }
 
         public void Handle(ICommand command)
@@ -21,7 +22,7 @@ namespace Cik.Magazine.CategoryService.Domain
 
         public void Handle(CreateCategory message)
         {
-            EventSink.Publish(new CategoryCreated(message.AggregateId, message.Name, message.ParentId));
+            EventSink.Publish(new CategoryCreated(message.AggregateId, message.Name, message.Status));
         }
 
         public void Handle(UpdateCategory message)

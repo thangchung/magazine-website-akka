@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Cik.Magazine.Shared.Messages.Category;
 
 namespace Cik.Magazine.Shared.Models.Category
 {
@@ -8,7 +9,6 @@ namespace Cik.Magazine.Shared.Models.Category
     {
         [Required]
         public string Name { get; set; }
-
-        public Guid ParentId { get; set; }
+        public Status Status { get; set; }
     }
 }

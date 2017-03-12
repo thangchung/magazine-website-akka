@@ -38,7 +38,7 @@ namespace Cik.Magazine.CategoryService.Denomalizer
             col.InsertOne(new CategoryViewResponse
             {
                 Name = message.Name, 
-                ParentId = message.ParentId
+                Status = message.Status
             });
         }
 
