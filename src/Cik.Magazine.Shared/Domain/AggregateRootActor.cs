@@ -9,15 +9,17 @@ namespace Cik.Magazine.Shared.Domain
 {
     public class AggregateRootCreationParameters
     {
-        public AggregateRootCreationParameters(Guid id, IActorRef projections, int snapshotThreshold = 250)
+        public AggregateRootCreationParameters(Guid id, IActorRef projections, IActorRef processManager, int snapshotThreshold = 250)
         {
             Id = id;
             Projections = projections;
+            ProcessManager = processManager;
             SnapshotThreshold = snapshotThreshold;
         }
 
         public Guid Id { get; }
         public IActorRef Projections { get; }
+        public IActorRef ProcessManager { get; }
         public int SnapshotThreshold { get; }
     }
 
@@ -26,12 +28,14 @@ namespace Cik.Magazine.Shared.Domain
         private readonly Guid _id;
         private readonly ILoggingAdapter _log;
         private readonly IActorRef _projections;
+        private readonly IActorRef _processManager;
         private readonly int _snapshotThreshold;
 
         protected AggregateRootActor(AggregateRootCreationParameters parameters)
         {
             _id = parameters.Id;
             _projections = parameters.Projections;
+            _processManager = parameters.ProcessManager;
             _snapshotThreshold = parameters.SnapshotThreshold;
 
             _log = Context.GetLogger();
@@ -47,6 +51,7 @@ namespace Cik.Magazine.Shared.Domain
             {
                 Apply(e);
                 _projections.Tell(@event);
+                _processManager.Tell(@event);
                 Self.Tell(SaveAggregate.Message); // save the snapshot if it is possible
             });
         }

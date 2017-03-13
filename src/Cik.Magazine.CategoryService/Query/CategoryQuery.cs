@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Remoting.Contexts;
+using System.Threading;
 using Akka.Actor;
 using Akka.Event;
 using Cik.Magazine.CategoryService.Sagas;
@@ -34,7 +35,15 @@ namespace Cik.Magazine.CategoryService.Query
 
         public void Handle(ListCategoryViewRequest message)
         {
-            var saga = Context.ActorOf(Props.Create(() => new ReviewCategorySaga(new Guid("8f88d4f42e3c4a868b4667dfe5f97bea"))));
+            // var saga = Context.ActorOf(Props.Create(() => new CategoryProcessManager123(new Guid("8f88d4f42e3c4a868b4667dfe5f97bea"))));
+            // saga.Tell()
+
+            /*var saga = Context.ActorOf(Props.Create(() => new CategoryProcessManager()));
+            saga.Tell(Cik.Magazine.Shared.Messages.Category.Status.Reviewing);
+            saga.Tell(Cik.Magazine.Shared.Messages.Category.Status.Reviewing);
+            saga.Tell(Cik.Magazine.Shared.Messages.Category.Status.Reviewing);
+            saga.Tell(Cik.Magazine.Shared.Messages.Category.Status.Reviewing);
+            saga.Tell(Cik.Magazine.Shared.Messages.Category.Status.Reviewing);*/
 
             _log.Info("Received message[{0}] and query data in NoSQL data source.", message.GetType().Name);
             var db = _mongoClient.GetDatabase("magazine");

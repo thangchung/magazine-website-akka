@@ -23,6 +23,7 @@ namespace Cik.Magazine.CategoryService
         public bool Start(HostControl hostControl)
         {
             _logger.Information("Create an actor system, query and commander.");
+
             GlobalActorSystem = ActorSystem.Create("magazine-system");
             CategoryCommanderActor = GlobalActorSystem.CategoryCommanderAggregate(new Guid("8f88d4f42e3c4a868b4667dfe5f97bea"));
             CategoryQueryActor = GlobalActorSystem.CategoryQueryAggregate();
@@ -30,16 +31,19 @@ namespace Cik.Magazine.CategoryService
             // config for mongo
             // TODO: need to scan all the events and map it to BsonClassMap
             BsonClassMap.RegisterClassMap<CategoryCreated>();
+            BsonClassMap.RegisterClassMap<CategoryStatusUpdated>();
 
             return true;
         }
 
         public bool Stop(HostControl hostControl)
         {
-            _logger.Information("Release the actor system, query and commander resources.");
+            _logger.Information("Release the actor system, query, commander and process manager resources.");
+
             CategoryCommanderActor.Tell(PoisonPill.Instance);
             CategoryQueryActor.Tell(PoisonPill.Instance);
             GlobalActorSystem.Terminate();
+
             return true;
         }
     }
