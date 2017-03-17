@@ -10,4 +10,7 @@ The Microservices + CQRS architecture are implemented by using Akkadotnet
 - Lighthouse.exe install -servicename "Magazine Website - Lighthouse" –autostart
 - Cik.Magazine.CategoryService.exe install -servicename "Magazine Website - Category Service" –autostart
 
+## Query with GraphQL
+- Choose `/graphql`, then input `query { categories { id, status } }` for the `query` field
+
 [![](https://codescene.io/projects/786/status.svg) Get more details at **codescene.io**.](https://codescene.io/projects/786/jobs/latest-successful/results)
