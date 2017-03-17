@@ -2,7 +2,12 @@
 using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Routing;
+using Cik.Magazine.ApiGateway.GraphQL;
+using Cik.Magazine.ApiGateway.GraphQL.Category;
 using Cik.Magazine.ApiGateway.Middlewares;
+using GraphQL;
+using GraphQL.Http;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,9 +22,9 @@ namespace Cik.Magazine.ApiGateway
 {
     public class Startup
     {
-        private ActorSystem _systemActor;
-        private IActorRef _categoryQueryActor;
         private IActorRef _categoryCommanderActor;
+        private IActorRef _categoryQueryActor;
+        private ActorSystem _systemActor;
 
         public Startup(IHostingEnvironment env)
         {
@@ -39,6 +44,7 @@ namespace Cik.Magazine.ApiGateway
             // Add framework services.
             services
                 .AddMvc()
+                .AddWebApiConventions()
                 .AddJsonOptions(
                     opts =>
                     {
@@ -78,14 +84,26 @@ namespace Cik.Magazine.ApiGateway
 
             // build up the actors
             _systemActor = ActorSystem.Create("magazine-system");
-            _categoryQueryActor = _systemActor.ActorOf(Props.Empty.WithRouter(FromConfig.Instance), "category-query-group");
-            _categoryCommanderActor = _systemActor.ActorOf(Props.Empty.WithRouter(FromConfig.Instance), "category-commander-group");
+            _categoryQueryActor = _systemActor.ActorOf(
+                Props.Empty.WithRouter(FromConfig.Instance), "category-query-group");
+            _categoryCommanderActor = _systemActor.ActorOf(
+                Props.Empty.WithRouter(FromConfig.Instance), "category-commander-group");
 
             services.AddSingleton<IActorRefFactory>(serviceProvider => _systemActor);
+
+            // GraphQL
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+            services.AddSingleton<IDocumentWriter, DocumentWriter>();
+            services.AddScoped<MagazineQuery>();
+            services.AddScoped<CategoryType>();
+            services.AddSingleton(
+                typeof(MagazineSchema),
+                serviceProvider => new MagazineSchema(type => (GraphType) serviceProvider.GetService(type)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime, IHostingEnvironment env,
+            ILoggerFactory loggerFactory)
         {
             applicationLifetime.ApplicationStopping.Register(OnShutdown);
 
@@ -102,7 +120,12 @@ namespace Cik.Magazine.ApiGateway
             // TODO: need to check some of URI alive, for example check AuthHost, CategoryService...
             app.UseServiceStatus(() => Task.FromResult(true));
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapWebApiRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.UseSwagger();
             app.UseSwaggerUi(c =>
@@ -113,8 +136,8 @@ namespace Cik.Magazine.ApiGateway
         }
 
         /// <summary>
-        /// https://stackoverflow.com/questions/35257287/kestrel-shutdown-function-in-startup-cs-in-asp-net-core
-        /// https://shazwazza.com/post/aspnet-core-application-shutdown-events/
+        ///     https://stackoverflow.com/questions/35257287/kestrel-shutdown-function-in-startup-cs-in-asp-net-core
+        ///     https://shazwazza.com/post/aspnet-core-application-shutdown-events/
         /// </summary>
         private void OnShutdown()
         {
