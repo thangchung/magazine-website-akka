@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Routing;
 using Cik.Magazine.ApiGateway.GraphQL;
-using Cik.Magazine.ApiGateway.GraphQL.Category;
 using Cik.Magazine.ApiGateway.Middlewares;
 using GraphQL;
 using GraphQL.Http;
-using GraphQL.Types;
+using GraphQLLib = GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -95,10 +94,8 @@ namespace Cik.Magazine.ApiGateway
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddSingleton<IDocumentWriter, DocumentWriter>();
             services.AddScoped<MagazineQuery>();
-            services.AddScoped<CategoryType>();
-            services.AddSingleton(
-                typeof(MagazineSchema),
-                serviceProvider => new MagazineSchema(type => (GraphType) serviceProvider.GetService(type)));
+            // services.AddScoped<CategoryType>();
+            services.AddTransient<GraphQLLib.ISchema>(sp => new GraphQLLib.Schema { Query = sp.GetService<MagazineQuery>() });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
