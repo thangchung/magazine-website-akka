@@ -1,10 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Remoting.Contexts;
-using System.Threading;
 using Akka.Actor;
 using Akka.Event;
-using Cik.Magazine.CategoryService.Sagas;
 using Cik.Magazine.Shared.Queries;
 using MongoDB.Driver;
 
@@ -15,6 +12,7 @@ namespace Cik.Magazine.CategoryService.Query
         IHandle<CategoryViewRequest>
     {
         private readonly ILoggingAdapter _log;
+
         // TODO: will refactor later
         private readonly MongoClient _mongoClient = new MongoClient(new MongoUrl("mongodb://127.0.0.1:27017"));
 

@@ -22,6 +22,7 @@ namespace Cik.Magazine.CategoryService.Denomalizer
         public void Handle(CreateNewCategory message)
         {
             _log.Info("Creation: start to handle [{0}]", message.GetType().Name);
+
             // TODO: will refactor later
             _mongoClient = new MongoClient(new MongoUrl("mongodb://127.0.0.1:27017"));
             var db = _mongoClient.GetDatabase("magazine");
@@ -37,7 +38,7 @@ namespace Cik.Magazine.CategoryService.Denomalizer
 
             col.InsertOne(new CategoryViewResponse
             {
-                Name = message.Name, 
+                Name = message.Name,
                 Status = message.Status
             });
         }
@@ -45,6 +46,7 @@ namespace Cik.Magazine.CategoryService.Denomalizer
         public void Handle(DeleteCategory message)
         {
             _log.Info("Delete: start to handle [{0}]", message.GetType().Name);
+
             // TODO: will refactor later
             _mongoClient = new MongoClient(new MongoUrl("mongodb://127.0.0.1:27017"));
             var db = _mongoClient.GetDatabase("magazine");
@@ -65,6 +67,7 @@ namespace Cik.Magazine.CategoryService.Denomalizer
         public void Handle(UpdateCategory message)
         {
             _log.Info("Edit: start to handle [{0}]", message.GetType().Name);
+
             // TODO: will refactor later
             _mongoClient = new MongoClient(new MongoUrl("mongodb://127.0.0.1:27017"));
             var db = _mongoClient.GetDatabase("magazine");

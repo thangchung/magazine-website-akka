@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 
 namespace Cik.Magazine.ApiGateway.Controllers
 {
+    /// <summary>
+    ///  The main controller for the graphql endpoint
+    /// </summary>
     [Route("graphql")]
     public class GraphQLController : Controller
     {
@@ -15,6 +18,12 @@ namespace Cik.Magazine.ApiGateway.Controllers
         private readonly ILogger _logger;
         private readonly ISchema _schema;
 
+        /// <summary>
+        /// The constructor of the GraphQLController
+        /// </summary>
+        /// <param name="documentExecuter"></param>
+        /// <param name="schema"></param>
+        /// <param name="logger"></param>
         public GraphQLController(IDocumentExecuter documentExecuter, ISchema schema, ILogger<GraphQLController> logger)
         {
             _documentExecuter = documentExecuter;
@@ -22,6 +31,11 @@ namespace Cik.Magazine.ApiGateway.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        ///  Post action is the main and only one action for submit the query and mutation of GraphQL
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
         {
