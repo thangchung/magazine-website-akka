@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Akka.Actor;
 using Akka.Routing;
 using Cik.Magazine.CategoryService.Denomalizer.Projections;
@@ -20,14 +21,16 @@ namespace Cik.Magazine.CategoryService
             var nameOfProcessManagerActor = "category-process-manager";
 
             // build up the category actor
-            var projectionsProps = new ConsistentHashingPool(10).Props(Props.Create<ReadModelProjections>());
+            var projectionsProps = new ConsistentHashingPool(10)
+                .Props(Props.Create<ReadModelProjections>());
             var projections = system.ActorOf(projectionsProps, $"{nameofProjectionActor}-{nameOfCommanderActor}");
 
-            // TODO: need to have a way to inject commander into process manager for trigger event back to commander
-            var processManagerProps = new ConsistentHashingPool(10).Props(Props.Create(() => new CategoryProcessManager(id, null)));
+            var processManagerProps = new ConsistentHashingPool(10)
+                .Props(Props.Create(() => new CategoryProcessManager(id)));
             var processManager = system.ActorOf(processManagerProps, $"{nameOfProcessManagerActor}");
 
-            var creationParams = new AggregateRootCreationParameters(id, projections, processManager, snapshotThreshold);
+            var creationParams = new AggregateRootCreationParameters(id, projections,
+                new HashSet<IActorRef>(new List<IActorRef> {processManager}), snapshotThreshold);
             return system.ActorOf(Props.Create<Category>(creationParams), nameOfCommanderActor);
         }
 

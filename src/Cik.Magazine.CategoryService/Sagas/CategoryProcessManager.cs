@@ -1,31 +1,34 @@
 ﻿using System;
 using Akka;
-using Akka.Actor;
 using Akka.Event;
 using Akka.Persistence;
 using Akka.Persistence.Fsm;
-using Cik.Magazine.CategoryService.Domain;
 using Cik.Magazine.Shared;
 using Cik.Magazine.Shared.Messages.Category;
 using Status = Cik.Magazine.Shared.Messages.Category.Status;
 
 namespace Cik.Magazine.CategoryService.Sagas
 {
-    public class CategoryProcessManager : PersistentFSM<Status, CategoryState, Event>
+    public class CategoryData
+    {
+        public Guid Id { get; set; }
+        public Status Status { get; set; }    
+    }
+
+    public class CategoryProcessManager : PersistentFSM<Status, CategoryData, Event>
     {
         private readonly Guid _id;
-        private readonly IActorRef _commander;
-        private readonly CategoryState _state = new CategoryState();
+        // private readonly CategoryState _state = new CategoryState();
+        private readonly CategoryData _data = new CategoryData();
         private readonly ILoggingAdapter _log;
         private long LastSnapshottedVersion { get; set; }
 
-        public CategoryProcessManager(Guid id, IActorRef commander)
+        public CategoryProcessManager(Guid id)
         {
             _id = id;
-            _commander = commander;
             _log = Context.GetLogger();
 
-            StartWith(Status.Reviewing, _state);
+            StartWith(Status.Reviewing, _data);
             When(Status.Reviewing, (e, state) =>
             {
                 if (e.FsmEvent is CategoryCreated)
@@ -39,7 +42,7 @@ namespace Cik.Magazine.CategoryService.Sagas
             });
             When(Status.Published, (e, state) =>
             {
-                // TODO: do the actions like send email to notify or something else
+                
                 return state;
             });
         }
@@ -51,16 +54,19 @@ namespace Cik.Magazine.CategoryService.Sagas
             return message.Match()
                 .With<IEvent>(@event =>
                 {
-                    Persist(@event, e => { });
+                    Persist(@event, e =>
+                    {
+                    });
                 }).WasHandled;
         }
 
         protected override bool ReceiveRecover(object message)
         {
             return message.Match()
-                .With<CategoryCreated>(@event =>
+                .With<CategoryStatusUpdated>(@event =>
                 {
-                    _state.Apply(@event);
+                    _data.Id = @event.AggregateId;
+                    _data.Status = @event.Status;
                 })
                 .With<RecoveryCompleted>(() =>
                 {
@@ -72,10 +78,11 @@ namespace Cik.Magazine.CategoryService.Sagas
                 }).WasHandled;
         }
 
-        protected override CategoryState ApplyEvent(Event e, CategoryState data)
+        protected override CategoryData ApplyEvent(Event e, CategoryData data)
         {
             if (e is CategoryStatusUpdated)
             {
+                // TODO: send notification to sys-admin for approve the category 
                 return data;
             }
             return data;

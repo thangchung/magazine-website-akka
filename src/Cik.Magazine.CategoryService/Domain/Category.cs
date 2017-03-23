@@ -8,10 +8,10 @@ namespace Cik.Magazine.CategoryService.Domain
     {
         private CategoryState _state;
 
-        public Category(AggregateRootCreationParameters parameters) 
+        public Category(AggregateRootCreationParameters parameters)
             : base(parameters)
         {
-            _state = new CategoryState {EventSink = this};
+            _state = new CategoryState {EventSink = this, ProcessManagers = ProcessManagers};
         }
 
         protected override bool Handle(ICommand command)

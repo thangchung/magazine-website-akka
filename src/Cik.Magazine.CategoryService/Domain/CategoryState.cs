@@ -1,6 +1,9 @@
-﻿using Cik.Magazine.Shared;
+﻿using System.Collections.Generic;
+using Akka.Actor;
+using Cik.Magazine.Shared;
 using Cik.Magazine.Shared.Domain;
 using Cik.Magazine.Shared.Messages.Category;
+using Status = Cik.Magazine.Shared.Messages.Category.Status;
 
 namespace Cik.Magazine.CategoryService.Domain
 {
@@ -9,6 +12,7 @@ namespace Cik.Magazine.CategoryService.Domain
         public string Name { get; private set; }
         public Status Status { get; private set; }
         internal IEventSink EventSink { get; set; }
+        internal ISet<IActorRef> ProcessManagers { get; set; }
 
         public void Handle(ICommand command)
         {
@@ -23,6 +27,10 @@ namespace Cik.Magazine.CategoryService.Domain
         public void Handle(CreateCategory message)
         {
             EventSink.Publish(new CategoryCreated(message.AggregateId, message.Name, message.Status));
+            foreach (var pm in ProcessManagers)
+            {
+                pm.Tell(message.Status);
+            }
         }
 
         public void Handle(UpdateCategory message)

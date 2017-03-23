@@ -30,15 +30,4 @@ namespace Cik.Magazine.Shared.Messages.Category
 
         public string Name { get; }
     }
-
-    public class CategoryStatusUpdated : Event
-    {
-        public CategoryStatusUpdated(Guid aggregateId, Status status)
-            : base(aggregateId)
-        {
-            Status = status;
-        }
-
-        public Status Status { get; }
-    }
 }

@@ -46,6 +46,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cik.Magazine.MasterService"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cik.Magazine.EmailService", "src\Cik.Magazine.EmailService\Cik.Magazine.EmailService.csproj", "{B078ECA6-201B-43B3-B474-E30856D37992}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{71DC390E-48EE-4978-BC55-C2B36EB8D941}"
+	ProjectSection(SolutionItems) = preProject
+		docs\CategoryPublishingApprovalFlow.png = docs\CategoryPublishingApprovalFlow.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
