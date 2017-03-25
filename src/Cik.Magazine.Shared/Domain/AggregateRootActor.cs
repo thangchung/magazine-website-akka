@@ -37,10 +37,10 @@ namespace Cik.Magazine.Shared.Domain
         {
             _id = parameters.Id;
             _projections = parameters.Projections;
-            ProcessManagers = parameters.ProcessManagers;
             _snapshotThreshold = parameters.SnapshotThreshold;
-
             _log = Context.GetLogger();
+
+            ProcessManagers = parameters.ProcessManagers;
         }
 
         public override string PersistenceId => $"{GetType().Name}-agg-{_id:n}".ToLowerInvariant();

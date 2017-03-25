@@ -18,7 +18,6 @@ namespace Cik.Magazine.CategoryService.Sagas
     public class CategoryProcessManager : PersistentFSM<Status, CategoryData, Event>
     {
         private readonly Guid _id;
-        // private readonly CategoryState _state = new CategoryState();
         private readonly CategoryData _data = new CategoryData();
         private readonly ILoggingAdapter _log;
         private long LastSnapshottedVersion { get; set; }
@@ -42,7 +41,6 @@ namespace Cik.Magazine.CategoryService.Sagas
             });
             When(Status.Published, (e, state) =>
             {
-                
                 return state;
             });
         }
