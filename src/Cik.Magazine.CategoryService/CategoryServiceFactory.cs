@@ -25,9 +25,9 @@ namespace Cik.Magazine.CategoryService
                 .Props(Props.Create<ReadModelProjections>());
             var projections = system.ActorOf(projectionsProps, $"{nameofProjectionActor}-{nameOfCommanderActor}");
 
-            var processManagerProps = new ConsistentHashingPool(10)
-                .Props(Props.Create(() => new CategoryProcessManager(id)));
-            var processManager = system.ActorOf(processManagerProps, $"{nameOfProcessManagerActor}");
+            /*var processManagerProps = new ConsistentHashingPool(1)
+                .Props(Props.Create(() => new CategoryProcessManager(id)));*/
+            var processManager = system.ActorOf(Props.Create(() => new CategoryProcessManager(id)));
 
             var creationParams = new AggregateRootCreationParameters(id, projections,
                 new HashSet<IActorRef>(new List<IActorRef> {processManager}), snapshotThreshold);

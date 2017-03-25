@@ -11,12 +11,18 @@ namespace Cik.Magazine.CategoryService.Domain
         public Category(AggregateRootCreationParameters parameters)
             : base(parameters)
         {
-            _state = new CategoryState {EventSink = this, ProcessManagers = ProcessManagers};
+            _state = new CategoryState {EventSink = this};
         }
 
         protected override bool Handle(ICommand command)
         {
             _state.Handle(command);
+
+            // span out for all the process managers
+            foreach (var pm in ProcessManagers)
+            {
+                pm.Tell(command, Sender);
+            }
             return true;
         }
 

@@ -19,24 +19,21 @@ namespace Cik.Magazine.CategoryService.Sagas
             {
                 Id = Guid.NewGuid(),
                 Name = "Sample",
-                Status = Status.Reviewing
+                Status = Status.Draft
             };
 
-            StartWith(Status.Reviewing, initData);
+            StartWith(Status.Draft, initData);
 
-            When(Status.Reviewing, @event =>
+            When(Status.Draft, @event =>
             {
-                Console.WriteLine("Run Reviewing");
-                if (@event.StateData.Status == Status.Reviewing)
+                Console.WriteLine("Run Draft");
+                if (@event.StateData.Status == Status.Draft)
                 {
                     @event.StateData.Status = Status.Published;
                     return GoTo(Status.Published)
                         .Using(initData);
                 }
-                else
-                {
-                    Console.WriteLine("Already Reviewed.");
-                }
+                Console.WriteLine("Already Drafted.");
                 return null;
             }, TimeSpan.FromSeconds(5));
 
@@ -45,8 +42,8 @@ namespace Cik.Magazine.CategoryService.Sagas
                 Console.WriteLine("Run Published");
                 if (@event.StateData.Status == Status.Published)
                 {
-                    @event.StateData.Status = Status.Reviewing;
-                    return GoTo(Status.Reviewing)
+                    @event.StateData.Status = Status.Draft;
+                    return GoTo(Status.Draft)
                         .Using(initData);
                 }
                 else
@@ -63,11 +60,6 @@ namespace Cik.Magazine.CategoryService.Sagas
             
             Initialize();
             
-        }
-
-        protected override bool Receive(object message)
-        {
-            return base.Receive(message);
         }
     }
 }

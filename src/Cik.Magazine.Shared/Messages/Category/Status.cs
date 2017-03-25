@@ -2,7 +2,8 @@
 {
     public enum Status
     {
-        Reviewing,
+        Draft,
+        WaitingForApproval,
         Published
     }
 }

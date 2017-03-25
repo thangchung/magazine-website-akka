@@ -23,6 +23,6 @@ namespace Cik.Magazine.Shared.Messages.Category
             Status = status;
         }
 
-        public Status Status { get; }
+        public Status Status { get; private set; }
     }
 }
