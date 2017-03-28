@@ -1,4 +1,6 @@
-﻿using Akka;
+﻿using System.Collections.Generic;
+using Akka;
+using Akka.Actor;
 using Cik.Magazine.Shared;
 using Cik.Magazine.Shared.Domain;
 
@@ -7,22 +9,30 @@ namespace Cik.Magazine.CategoryService.Domain
     public class Category : AggregateRootActor
     {
         private CategoryState _state;
+        public ISet<ActorSelection> ActorSelections { get; }
 
         public Category(AggregateRootCreationParameters parameters)
             : base(parameters)
         {
             _state = new CategoryState {EventSink = this};
+
+            // register sagas 
+            ActorSelections = new HashSet<ActorSelection>
+            {
+                Context.ActorSelection("/user/category-status-broadcaster-group")
+            };
         }
 
         protected override bool Handle(ICommand command)
         {
             _state.Handle(command);
 
-            // span out for all the process managers
-            foreach (var pm in ProcessManagers)
+            // span out to sagas
+            foreach (var pm in ActorSelections)
             {
-                pm.Tell(command, Sender);
+                pm.Tell(command);
             }
+
             return true;
         }
 

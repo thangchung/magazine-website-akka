@@ -53,6 +53,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{71DC390E-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cik.Magazine.Benchmark.Console", "src\Cik.Magazine.Benchmark.Console\Cik.Magazine.Benchmark.Console.csproj", "{D98E220B-165F-4A26-AC1D-847FDC4B1710}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cik.Magazine.ProcessManager", "src\Cik.Magazine.ProcessManager\Cik.Magazine.ProcessManager.csproj", "{854BE079-6DA2-4138-B707-6627315C46F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,18 @@ Global
 		{D98E220B-165F-4A26-AC1D-847FDC4B1710}.Release|x64.Build.0 = Release|Any CPU
 		{D98E220B-165F-4A26-AC1D-847FDC4B1710}.Release|x86.ActiveCfg = Release|Any CPU
 		{D98E220B-165F-4A26-AC1D-847FDC4B1710}.Release|x86.Build.0 = Release|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Debug|x64.Build.0 = Debug|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Release|x64.ActiveCfg = Release|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Release|x64.Build.0 = Release|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{854BE079-6DA2-4138-B707-6627315C46F6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,5 +191,6 @@ Global
 		{87302267-6FBF-4E28-ABC4-2FF832DAC72B} = {B705FA55-841C-4792-B357-0E0F7E7BBD2D}
 		{B078ECA6-201B-43B3-B474-E30856D37992} = {B705FA55-841C-4792-B357-0E0F7E7BBD2D}
 		{D98E220B-165F-4A26-AC1D-847FDC4B1710} = {B10EC218-4988-49EE-982C-8FE265BD1B12}
+		{854BE079-6DA2-4138-B707-6627315C46F6} = {B705FA55-841C-4792-B357-0E0F7E7BBD2D}
 	EndGlobalSection
 EndGlobal

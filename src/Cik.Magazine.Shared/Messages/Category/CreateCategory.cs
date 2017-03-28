@@ -3,18 +3,17 @@
 namespace Cik.Magazine.Shared.Messages.Category
 {
     [Serializable]
-    public class CreateCategory : ICommand
+    public class CreateCategory : Command
     {
         public CreateCategory(Guid aggregateId, string name, Status status)
+            : base(aggregateId)
         {
             Name = name;
             Status = status;
-            AggregateId = aggregateId;
         }
 
         public string Name { get; }
         public Status Status { get; }
-        public Guid AggregateId { get; }
 
         public override string ToString()
         {

@@ -1,6 +1,5 @@
 ﻿using System;
 using Akka.Actor;
-using Akka.Persistence.Fsm;
 using Cik.Magazine.Shared.Messages.Category;
 using MongoDB.Bson.Serialization;
 using Serilog;

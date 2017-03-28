@@ -87,7 +87,6 @@ namespace Cik.Magazine.ApiGateway
                 Props.Empty.WithRouter(FromConfig.Instance), "category-query-group");
             _categoryCommanderActor = _systemActor.ActorOf(
                 Props.Empty.WithRouter(FromConfig.Instance), "category-commander-group");
-
             services.AddSingleton<IActorRefFactory>(serviceProvider => _systemActor);
 
             // GraphQL
@@ -140,7 +139,7 @@ namespace Cik.Magazine.ApiGateway
         {
             _categoryQueryActor.Tell(PoisonPill.Instance);
             _categoryCommanderActor.Tell(PoisonPill.Instance);
-            _systemActor.Terminate().Wait(5000);
+            _systemActor.Terminate();
         }
     }
 }

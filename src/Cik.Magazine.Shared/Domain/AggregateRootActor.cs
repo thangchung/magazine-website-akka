@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Akka;
 using Akka.Actor;
-using Akka.Event;
+using Akka.Cluster;
 using Akka.Persistence;
 using Cik.Magazine.Shared.Messages;
 
@@ -27,8 +27,8 @@ namespace Cik.Magazine.Shared.Domain
 
     public abstract class AggregateRootActor : PersistentActor, IEventSink
     {
+        protected Cluster Cluster = Cluster.Get(Context.System);
         private readonly Guid _id;
-        private readonly ILoggingAdapter _log;
         private readonly IActorRef _projections;
         private readonly int _snapshotThreshold;
         protected readonly ISet<IActorRef> ProcessManagers;
@@ -38,7 +38,6 @@ namespace Cik.Magazine.Shared.Domain
             _id = parameters.Id;
             _projections = parameters.Projections;
             _snapshotThreshold = parameters.SnapshotThreshold;
-            _log = Context.GetLogger();
 
             ProcessManagers = parameters.ProcessManagers;
         }
@@ -60,10 +59,10 @@ namespace Cik.Magazine.Shared.Domain
         protected override bool ReceiveRecover(object message)
         {
             return message.Match()
-                .With<RecoveryCompleted>(x => { _log.Debug("Recovered state to version {0}", LastSequenceNr); })
+                .With<RecoveryCompleted>(x => { Log.Debug("Recovered state to version {0}", LastSequenceNr); })
                 .With<SnapshotOffer>(offer =>
                 {
-                    _log.Debug("State loaded from snapshot");
+                    Log.Debug("State loaded from snapshot");
                     LastSnapshottedVersion = offer.Metadata.SequenceNr;
                     RecoverState(offer.Snapshot);
                 })
@@ -77,7 +76,7 @@ namespace Cik.Magazine.Shared.Domain
                 .With<SaveAggregate>(x => Save())
                 .With<SaveSnapshotSuccess>(success =>
                 {
-                    _log.Debug("Saved snapshot");
+                    Log.Debug("Saved snapshot");
                     DeleteMessages(success.Metadata.SequenceNr);
                 })
                 .With<SaveSnapshotFailure>(failure =>
@@ -96,6 +95,19 @@ namespace Cik.Magazine.Shared.Domain
                         Sender.Tell(e);
                     }
                 }).WasHandled;
+        }
+
+        protected override void PreStart()
+        {
+            Cluster.Subscribe(Self, typeof(ClusterEvent.MemberUp));
+            Log.Info("PM [{0}]: Send from {1}", Cluster.SelfAddress, Sender);
+            base.PreStart();
+        }
+
+        protected override void PostStop()
+        {
+            Cluster.Unsubscribe(Self);
+            base.PostStop();
         }
 
         private bool Save()

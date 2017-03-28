@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Akka;
-using Akka.Event;
+using Akka.Cluster;
 using Akka.Persistence;
 using Akka.Persistence.Fsm;
 using Cik.Magazine.Shared;
 using Cik.Magazine.Shared.Messages.Category;
-using MongoDB.Bson.Serialization;
 
-namespace Cik.Magazine.CategoryService.Sagas
+namespace Cik.Magazine.ProcessManager.Workflows
 {
     public class CategoryData
     {
@@ -27,19 +26,15 @@ namespace Cik.Magazine.CategoryService.Sagas
     ///     5. [CategoryProcessManager] sends an email to notify with [Admin], and triggers CategoryApproved event for
     ///     persistence it into the storage
     /// </summary>
-    public class CategoryProcessManager : PersistentFSM<Status, List<CategoryData>, Event>
+    public class CategoryStatusWorkflow : PersistentFSM<Status, List<CategoryData>, Event>
     {
+        protected Cluster Cluster = Cluster.Get(Context.System);
         private readonly List<CategoryData> _data = new List<CategoryData>();
         private readonly Guid _id;
-        private readonly ILoggingAdapter _log;
 
-        public CategoryProcessManager(Guid id)
+        public CategoryStatusWorkflow(Guid id)
         {
             _id = id;
-            _log = Context.GetLogger();
-
-            if (!BsonClassMap.IsClassMapRegistered(typeof(StateChangeEvent)))
-                BsonClassMap.RegisterClassMap<StateChangeEvent>();
 
             StartWith(Status.Draft, _data);
 
@@ -54,7 +49,7 @@ namespace Cik.Magazine.CategoryService.Sagas
                 return state;
             });
 
-            When(Status.Draft, (e, state) =>
+            When(Status.WaitingForApproval, (e, state) =>
             {
                 // TODO: 1. handle e.FsmEvent is ApproveCategory
                 // TODO: 2. GoTo(Status.Published)
@@ -99,7 +94,7 @@ namespace Cik.Magazine.CategoryService.Sagas
                 })
                 .With<RecoveryCompleted>(() =>
                 {
-                    _log.Debug("[PM] Recovered state to version {0}", LastSequenceNr);
+                    Log.Debug("[PM] Recovered state to version {0}", LastSequenceNr);
                     OnRecoveryCompleted();
                 })
                 .With<SnapshotOffer>(offer => { LastSnapshottedVersion = offer.Metadata.SequenceNr; }).WasHandled;
@@ -146,6 +141,20 @@ namespace Cik.Magazine.CategoryService.Sagas
                     // TODO: [side-effects] send notification to sys-admin for approve the category 
                     // TODO: e.g EmailActor.Tell(SendEmail())
                 }
+        }
+
+        protected override void PreStart()
+        {
+            Log.Info("PM [{0}]: Send from {1}", Cluster.SelfAddress, Sender);
+            // Cluster.Subscribe(Self, typeof(ClusterEvent.MemberUp));
+            base.PreStart();
+        }
+
+        protected override void PostStop()
+        {
+            Log.Info("PM: PostStop happened.");
+            // Cluster.Unsubscribe(Self);
+            base.PostStop();
         }
     }
 }

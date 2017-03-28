@@ -2,7 +2,7 @@
 using Akka.Actor;
 using Status = Cik.Magazine.Shared.Messages.Category.Status;
 
-namespace Cik.Magazine.CategoryService.Sagas
+namespace Cik.Magazine.ProcessManager.Workflows
 {
     public class Data
     {
@@ -11,9 +11,9 @@ namespace Cik.Magazine.CategoryService.Sagas
         public Status Status { get; set; }
     }
 
-    public class ExampleProcessManager : FSM<Status, Data>
+    public class ExampleWorkflow : FSM<Status, Data>
     {
-        public ExampleProcessManager()
+        public ExampleWorkflow()
          {
             var initData = new Data
             {

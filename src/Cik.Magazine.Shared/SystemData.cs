@@ -10,6 +10,7 @@ namespace Cik.Magazine.Shared
         public static ActorMetaData CategoryProjectionsActor = new ActorMetaData("projections", $"akka://{SystemName}/user/category-projections");
         public static ActorMetaData CategoryQueryActor = new ActorMetaData("category-query", $"akka://{SystemName}/user/category-query");
         public static ActorMetaData CategoryCommanderActor = new ActorMetaData("category-commander", $"akka://{SystemName}/user/category-commander");
+        public static ActorMetaData CategoryStatusSagaActor = new ActorMetaData("category-status-saga", $"akka://{SystemName}/user/category-status-saga");
 
         public class ActorMetaData
         {

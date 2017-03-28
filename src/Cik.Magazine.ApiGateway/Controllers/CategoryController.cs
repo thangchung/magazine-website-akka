@@ -39,6 +39,7 @@ namespace Cik.Magazine.ApiGateway.Controllers
         {
             var result = await _categoryQuery.Ask<List<CategoryViewResponse>>(
                 new ListCategoryViewRequest());
+            
             return result;
         }
 
